@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -27,12 +29,13 @@ import lombok.ToString;
 public class Message {
 	@Id 
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Long id ;
+	private Long idMesssage ;
 	private String Content ; 
 	private String State ; 
 	
 	
 	@ManyToOne
+	@JsonIgnore
 	private User user ;
 
 }

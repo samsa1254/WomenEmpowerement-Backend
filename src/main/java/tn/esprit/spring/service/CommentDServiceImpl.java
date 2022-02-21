@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.CommentD;
-import tn.esprit.spring.entities.Formateur;
-import tn.esprit.spring.entities.Formation;
+ 
 import tn.esprit.spring.entities.Publication;
 import tn.esprit.spring.repository.CommentDRepository;
 import tn.esprit.spring.repository.PublicationRepository;

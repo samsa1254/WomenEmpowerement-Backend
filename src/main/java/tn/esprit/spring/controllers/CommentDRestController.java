@@ -17,7 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import tn.esprit.spring.entities.CommentD;
-import tn.esprit.spring.entities.Formation;
+
 import tn.esprit.spring.service.CommentDService;
 
 @Api(tags = "CommentD Management")
