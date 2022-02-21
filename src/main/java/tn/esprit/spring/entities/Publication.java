@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import io.swagger.annotations.Api;
@@ -30,10 +31,13 @@ import lombok.ToString;
 public class Publication {
 	@Id 
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private long id;
+	private long idPublication;
 	private String post ; 
 	private Date date ; 
 	private String state ; 
+	
+	@ManyToMany (mappedBy = "publications")
+	private List<User> users ; 
 	
 	@OneToMany(mappedBy = "publication")
 	private List<Reaction> reactions ; 
