@@ -4,7 +4,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
+ 
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Apprenant;
@@ -48,14 +48,14 @@ public class ApprenantServiceImpl  implements ApprenantService{
 		
 	}
 	
-	@Scheduled(cron = "*/30 * * * * *")
-	void nbreApprenantByFormation() {
+	//@Scheduled(cron = "*/30 * * * * *")
+	/*void nbreApprenantByFormation() {
 		List<Formation> frms = (List<Formation>) FormationRep.findAll();
 		for (Formation item : frms) {
 			//System.out.println("la formation : "+item.getTitre()+" contient "+item.getApprenants().size()+"apprenants  ");
 			
 		}
 
-	}
+	}*/
 
 }

@@ -5,8 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.CommentD;
-import tn.esprit.spring.entities.Publication;
-
+ 
 @Service
 public interface CommentDService {
 
