@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -32,7 +34,7 @@ import lombok.ToString;
 public class CommentD {
 	@Id 
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Long id ; 
+	private Long idCom ; 
 	private String tenor ; 
 	private Date date ; 
 	
@@ -40,6 +42,7 @@ public class CommentD {
 	private List<ReactionC> reactionc ; 
 	
 	@ManyToOne
+	@JsonIgnore
 	private Publication publication ; 
 
 }
