@@ -114,6 +114,9 @@ public class User implements Serializable{
 	@ManyToMany
 	private List<Cagnotte> cagnottes;
 	
+	@ManyToMany
+	private List<Publication> publications ;
+	
 
 	
 	

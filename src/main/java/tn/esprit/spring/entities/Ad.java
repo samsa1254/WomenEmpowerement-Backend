@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -29,7 +31,7 @@ import lombok.ToString;
 public class Ad {
 	@Id 
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long idAd;
 	private String name ; 
 	private String canal ; 
 	private Date datebegin ;
@@ -40,5 +42,6 @@ public class Ad {
 	private String type ; 
 	
 	@ManyToOne
+	@JsonIgnore
 	private User user ;
 }
