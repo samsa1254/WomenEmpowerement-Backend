@@ -3,12 +3,15 @@ package tn.esprit.spring.entities;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -37,12 +40,13 @@ public class Publication {
 	private String state ; 
 	
 	@ManyToMany (mappedBy = "publications")
+	@JsonIgnore
 	private List<User> users ; 
 	
 	@OneToMany(mappedBy = "publication")
 	private List<Reaction> reactions ; 
 	
-	@OneToMany (mappedBy = "publication")
+	@OneToMany (cascade = CascadeType.ALL , mappedBy =  "publication")
 	private List<CommentD> commentDs;
 	
 	

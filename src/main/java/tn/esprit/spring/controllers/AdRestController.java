@@ -42,7 +42,7 @@ public class AdRestController {
 	@GetMapping("/retrieve-ad/{idAd}")
 	@ApiOperation(value = "recuperer un ad  ")
 	@ResponseBody
-	public Ad getClient (@PathVariable("idAd") Long idAd)
+	public Ad getAd (@PathVariable("idAd") Long idAd)
 	{
 		return AdSer.retrievebyId(idAd);   
 	}
@@ -60,7 +60,7 @@ public class AdRestController {
 	@DeleteMapping("/remove-ad/{idAd}")
 	@ApiOperation(value = "supprimer un ad ")
 	@ResponseBody
-	public void removeClient(@PathVariable("idAd") Long idAd )
+	public void removeAd(@PathVariable("idAd") Long idAd )
 	{
 		AdSer.deleteAd(idAd);
 	}
@@ -68,7 +68,7 @@ public class AdRestController {
 	@PutMapping("/modify-ad")
 	@ApiOperation(value = "modifier un ad ")
 	@ResponseBody
-	public Ad modifyClient(@RequestBody Ad ad)
+	public Ad modifyAd(@RequestBody Ad ad)
 	{
 		Ad a = AdSer.updateAd(ad);
 		return a ; 
