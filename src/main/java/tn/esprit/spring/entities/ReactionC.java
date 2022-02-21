@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,7 @@ public class ReactionC {
 	private String ValueC ; 
 	
 	@ManyToOne
+	@JsonIgnore
 	private CommentD commentd ;
 
 }
