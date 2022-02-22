@@ -119,7 +119,8 @@ public class User implements Serializable{
 	
 
 	
-	
+	@ManyToMany
+	private List<Offer> offers;
 	
 	
 

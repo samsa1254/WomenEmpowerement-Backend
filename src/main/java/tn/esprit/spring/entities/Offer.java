@@ -3,12 +3,16 @@ package tn.esprit.spring.entities;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -40,7 +44,10 @@ public class Offer {
 	private Date date_Interview;
 	
 	
-	@OneToMany(mappedBy = "offer")
-	private List<Favorites> favorites;
+	//@OneToMany(mappedBy = "offer")
+	//private List<Favorites> favorites;
+	
+	@ManyToMany(mappedBy = "offers")
+	private List<User> users ; 
 
 }
