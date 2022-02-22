@@ -117,6 +117,9 @@ public class User implements Serializable{
 	@ManyToMany
 	private List<Publication> publications ;
 	
+	@OneToMany(mappedBy = "host")
+	private List<Event> events2 ;
+	
 
 	
 	

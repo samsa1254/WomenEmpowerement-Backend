@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -34,6 +36,7 @@ public class Cagnotte {
 	private String name ;
 	
 	@ManyToMany(mappedBy = "cagnottes")
-	private List<User> users ; 
+	@JsonIgnore
+	private List<User> donors ; 
 
 }
