@@ -1,5 +1,7 @@
 package tn.esprit.spring.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,17 @@ public class ReactionCServiceImpl implements ReactionCService{
 	    reactionC.setCommentd(c);
 	    reactioncRep.save(reactionC);
 	    return reactionC ;
+	}
+
+	@Override
+	public ReactionC retrievebyID(Long id) {
+		return reactioncRep.findById(id).get();
+	}
+
+	@Override
+	public List<ReactionC> retrieveAll() {
+		List<ReactionC> reacts = (List<ReactionC>) reactioncRep.findAll();
+		return reacts;
 	}
 
 }
