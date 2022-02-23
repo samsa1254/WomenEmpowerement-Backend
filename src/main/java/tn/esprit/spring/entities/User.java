@@ -161,7 +161,13 @@ public class User implements Serializable{
 
 	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
-	private List<Comment> comments  ; 
+	private List<Comment> comments  ;
+	@JsonIgnore
+	@OneToMany(mappedBy ="user" )
+	private List<Disponibilite> disponibilite ;
+	
+	
+	
 	
 
 
