@@ -26,7 +26,7 @@ public class QuestionController {
 	}
 	
 	@GetMapping("/retrieve-question/{question-id}")
-	public Question retrieve(@PathVariable("training-id") Long Id) {
+	public Question retrieve(@PathVariable("question-id") Long Id) {
 		return its.retrieve(Id);
 	}
 	@DeleteMapping("/remove-question/{question-id}")
