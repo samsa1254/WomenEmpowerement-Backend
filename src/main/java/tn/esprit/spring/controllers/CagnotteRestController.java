@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Cagnotte;
-import tn.esprit.spring.entities.Event;
+
 import tn.esprit.spring.service.CagnotteService;
 
 @Api(tags = "Cagnotte Management")
