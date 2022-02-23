@@ -18,7 +18,7 @@ public interface IUserService {
 
 	User retrieveUser(int id);
 
-	User updateUser(User c, int id);
+	User updateUser(User c);
 
 	
 }

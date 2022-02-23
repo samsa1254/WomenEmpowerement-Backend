@@ -146,6 +146,7 @@ public class User implements Serializable{
 	@ManyToMany
 	private List<Publication> publications ;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "host")
 	private List<Event> events2 ;
 	
@@ -154,10 +155,11 @@ public class User implements Serializable{
 	@ManyToMany
 	private List<Offer> offers;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
 	private List<Training> trainings  ; 
 
-	
+	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
 	private List<Comment> comments  ; 
 	

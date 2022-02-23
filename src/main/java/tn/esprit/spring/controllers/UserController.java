@@ -56,10 +56,10 @@ public class UserController {
 	}
 
 
-	@PutMapping("/modify-User/{User-id}")
+	@PutMapping("/modify-User")
 	@ResponseBody
-	public User modifyUser(@PathVariable("User-id") int UserId,@RequestBody User User) {
-	return UserService.updateUser(User,UserId);
+	public User modifyUser(@RequestBody User User) {
+	return UserService.updateUser(User);
 	}
 
 

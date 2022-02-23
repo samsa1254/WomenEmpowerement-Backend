@@ -108,9 +108,8 @@ public class UserServiceImpl implements IUserService {
 
 
 	@Override
-	public User updateUser(User c,int id) {
+	public User updateUser(User c) {
 		c.setPassword(encrypt(c.getPassword()));
-		c = UserRepository.findById(id).orElse(null) ; 
 		if (c.getRole().equals("admin"))
 		{
 			c.setSubscribtion(null);
