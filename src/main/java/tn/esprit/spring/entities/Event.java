@@ -10,6 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -36,8 +39,12 @@ public class Event {
 	private Type type ; 
 	private String Description ; 
 	private String Title ; 
+	@ManyToOne
+	@JsonIgnore
+	private User host;
 	
 	@ManyToMany (mappedBy = "events")
+	@JsonIgnore
 	private List<User> users  ; 
 
 }

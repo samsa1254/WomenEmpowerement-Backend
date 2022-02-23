@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Reaction;
-import tn.esprit.spring.entities.ReactionC;
-import tn.esprit.spring.service.ReactionCService;
+ 
+ 
 import tn.esprit.spring.service.ReactionService;
 
 @Api(tags = "Reaction Management")
