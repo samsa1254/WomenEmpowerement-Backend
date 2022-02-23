@@ -17,28 +17,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-
-
 @Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Appointment implements Serializable{
+public class Disponibilite implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="idAppointment")
+	@Column(name="idDisponibilite")
     private long id ; 
-	private String reason ; 
-	private Date dateAppointment;
+	private Date datedebut ; 
+	private Date datefin;
 	
 	@ManyToOne
 	@JsonIgnore
-	private User user ; 
-	
-	
-
+	private User user ;
 }
