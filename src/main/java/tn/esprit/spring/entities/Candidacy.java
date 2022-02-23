@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,32 +31,24 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Api
-public class Offer {
+public class Candidacy {
 	@Id 
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column (name = "Id_offer")
+	@Column (name = "Id_Candid")
 	private long id;
 	
-
-	private String name;
+	private String CandidName;
+	private String CV;
+	private String State;
+    
 	
-	
-	private String type;
-	
-	
-	private String status;
-	
-	
-	private Date date_Interview;
-	
-	
-	//@OneToMany(mappedBy = "offer")
-	//private List<Favorites> favorites;
+	private Date date_Of_Candid;
 	@JsonIgnore
-	@ManyToMany(mappedBy = "offers")
-	private List<User> users ; 
+	@ManyToOne
+	private Offer offer;
 	@JsonIgnore
-	@OneToMany(mappedBy = "offer")
-	private List<Candidacy> Candidacies ;
-
+	@ManyToOne
+	private User user ; 
+	
+	
 }
