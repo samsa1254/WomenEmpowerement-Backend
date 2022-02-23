@@ -7,7 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -41,11 +44,17 @@ public class Training {
 	@OneToMany(mappedBy = "training")
 	private List<Certification> certifications ;
 	
+	
 	@OneToMany(mappedBy = "training")
 	private List<Comment> comments ;
 	
+	
 	@OneToMany(mappedBy = "training")
 	private List<Quiz> quizs ;
+	
+	
+	@ManyToOne 
+	private User user ; 
 	
 
 	

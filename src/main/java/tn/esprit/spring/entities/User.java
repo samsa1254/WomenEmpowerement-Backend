@@ -99,8 +99,6 @@ public class User implements Serializable{
 	@OneToMany(mappedBy ="user" )
 	private List<Appointment> appointments  ; 
 	
-	@OneToMany(mappedBy ="user" )
-	private List<Comment> comments  ; 
 	
 	@OneToMany(mappedBy ="user" )
 	private List<Favorites> favorites  ; 
@@ -125,6 +123,12 @@ public class User implements Serializable{
 	@ManyToMany
 	private List<Offer> offers;
 	
+	@OneToMany(mappedBy ="user" )
+	private List<Training> trainings  ; 
+
+	
+	@OneToMany(mappedBy ="user" )
+	private List<Comment> comments  ; 
 	
 
 
