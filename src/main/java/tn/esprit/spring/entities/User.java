@@ -116,9 +116,7 @@ public class User implements Serializable{
 	@OneToMany(mappedBy ="user" )
 	private List<Message> messages  ; 
 	
-	@JsonIgnore
-	@OneToMany(mappedBy ="user" )
-	private List<Reaction> reactions  ; 
+	
 	
 	@JsonIgnore
 	@OneToMany(mappedBy ="userexpert" )
@@ -147,7 +145,7 @@ public class User implements Serializable{
 	private List<Cagnotte> cagnottes;
 	
 	@JsonIgnore
-	@ManyToMany
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
 	private List<Publication> publications ;
 	
 	@JsonIgnore
