@@ -54,7 +54,6 @@ public class CandidacyServiceImpl  implements CandidacyService{
 	    
 		Offer p = OR.findById(ido).get();	
 		User u = UR.findById(idu).get();
-		
 		String nameoffer = p.getName();
 		c.setCandidName(nameoffer);
 		c.setDate_Of_Candid(date);

@@ -1,5 +1,7 @@
 package tn.esprit.spring.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,24 @@ public class DisponibiliteServiceImpl implements DisponibiliteService {
 	public List<Disponibilite> retrieveallDisps() {
 		List<Disponibilite> disps = (List<Disponibilite>) disRep.findAll();
 		return disps;
+	}
+
+	@Override
+	public List<Disponibilite> findBydatedebut(Date dated) {
+		
+		return disRep.findBydatedebut(dated);
+	}
+
+	@Override
+	public List<Disponibilite> findBydatefin(Date datef) {
+		return disRep.findBydatefin(datef);
+	}
+
+	@Override
+	public List<Disponibilite> findByPeriod(Date dated, Date datef) {		
+		return disRep.findByDatedebutAfterAndDatefinBefore(dated, datef) ;
+		
+		
 	}
 
 }

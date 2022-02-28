@@ -2,6 +2,7 @@ package tn.esprit.spring.service;
 
 import java.util.List;
 
+import tn.esprit.spring.entities.ExpertSpec;
 import tn.esprit.spring.entities.User;
 
 
@@ -19,6 +20,10 @@ public interface IUserService {
 	User retrieveUser(int id);
 
 	User updateUser(User c);
+	
+	List<User> listeDeUserParexpertspeciality(ExpertSpec spec);
+	
+	
 
 	
 }

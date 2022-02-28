@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Appointment;
+import tn.esprit.spring.entities.Formation;
 import tn.esprit.spring.service.AppointmentService;
 
 
@@ -38,7 +39,7 @@ public class AppointmentRestController {
 	@GetMapping("/retrieve-app/{idAppointment}")
 	@ApiOperation(value = "recuperer un rendez-vous  ")
 	@ResponseBody
-	public Appointment getAppointment (@PathVariable("idAppointment") Long idApp)
+	public Appointment getAppointment (@PathVariable("idAppointment") int idApp)
 	{
 		return AppSer.retrievebyId(idApp);   
 	}
@@ -55,7 +56,7 @@ public class AppointmentRestController {
 	@DeleteMapping("/remove-app/{idAppointment}")
 	@ApiOperation(value = "supprimer un rendez-vous ")
 	@ResponseBody
-	public void removePub(@PathVariable("idAppointment") Long idapp )
+	public void removePub(@PathVariable("idAppointment") int idapp )
 	{
 		AppSer.deleteappById(idapp);
 	}
@@ -67,5 +68,12 @@ public class AppointmentRestController {
 	{
 		Appointment a = AppSer.updateAppointment(app);
 		return a ; 
+	}
+	
+	@PostMapping("/add-affectappointment/{idexpert}/{iduser})")
+	@ResponseBody
+	public void ajouterEtAffceterFormationaFormateur( @RequestBody Appointment appointment ,@PathVariable("idexpert") int idexpert,@PathVariable("iduser") int iduser)
+	{
+		AppSer.AddandAffectAppointmentoexpertanduser(appointment, idexpert, iduser);
 	}
 }

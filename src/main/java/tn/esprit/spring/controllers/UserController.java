@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tn.esprit.spring.entities.ExpertSpec;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.service.IUserService;
 
@@ -60,6 +61,11 @@ public class UserController {
 	@ResponseBody
 	public User modifyUser(@RequestBody User User) {
 	return UserService.updateUser(User);
+	}
+	
+	@GetMapping("/liste-expertbyspeciality/{speciality}")
+	List<User> listeDeexpertParspecialite(@PathVariable("speciality") ExpertSpec spec){
+		return UserService.listeDeUserParexpertspeciality(spec);
 	}
 
 
