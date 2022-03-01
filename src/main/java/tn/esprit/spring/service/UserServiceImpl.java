@@ -13,7 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+
 import tn.esprit.spring.entities.BlockUser;
+
+import tn.esprit.spring.entities.ExpertSpec;
+
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.*;
 
@@ -163,6 +167,12 @@ public class UserServiceImpl implements IUserService {
 		UserRepository.deleteById(id);
 	}
 	
+		
+		@Override
+	public List<User> listeDeUserParexpertspeciality(ExpertSpec spec){
+			return UserRepository.findByexpertspeciality(spec);
+			
+		}
 	
 	
 	
