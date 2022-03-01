@@ -37,6 +37,7 @@ public class Publication {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long idPublication;
 	private String post ; 
+	
 	private Date date ; 
 	private String state ; 
 	
@@ -49,6 +50,9 @@ public class Publication {
 	
 	@OneToMany (cascade = CascadeType.ALL , mappedBy =  "publication")
 	private List<CommentD> commentDs;
+	
+	@OneToMany(cascade = CascadeType.ALL , mappedBy = "publication")
+	private List<DBFile> dbFiles ; 
 	
 	
 	

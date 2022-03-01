@@ -3,6 +3,7 @@ package tn.esprit.spring.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,6 +61,22 @@ public class UserController {
 	@ResponseBody
 	public User modifyUser(@RequestBody User User) {
 	return UserService.updateUser(User);
+	}
+	
+	@GetMapping("/blockUser")
+	public ResponseEntity<Void> block(@RequestParam String angryUser, @RequestParam String blockedUser) throws Exception {
+		UserService.block(angryUser, blockedUser);
+		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/unblockUser")
+	public ResponseEntity<Void> unblock(@RequestParam String angryUser, @RequestParam String blockedUser) {
+		Boolean b = UserService.unblock(angryUser, blockedUser);
+		if(b.equals(Boolean.TRUE)) {
+			return ResponseEntity.ok().build();
+		} else {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 
