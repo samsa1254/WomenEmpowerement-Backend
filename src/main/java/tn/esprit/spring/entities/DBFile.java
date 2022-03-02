@@ -26,7 +26,7 @@ import lombok.Setter;
 @Api
 public class DBFile {
 	@Id
-	@Column(length = 50)
+	@Column(length = 500)
 	private String id ; 
 	private String name ; 
 	private String type ; 
