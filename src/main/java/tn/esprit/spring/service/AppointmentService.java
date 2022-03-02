@@ -17,7 +17,7 @@ public interface AppointmentService {
 	public void deleteappById ( int id );
 	public Appointment retrievebyId ( int id );
 	public List<Appointment> retrieveallApps ();
-	public void AddandAffectAppointmentoexpertanduser(Appointment appointment, int idexpert,int iduser);
+	public Appointment AddandAffectAppointmentoexpertanduser(Appointment appointment, int idexpert,int iduser);
 		
 
 }

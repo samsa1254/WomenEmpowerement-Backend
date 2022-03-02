@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import tn.esprit.spring.entities.Appointment;
 import tn.esprit.spring.entities.Report;
 import tn.esprit.spring.service.ReportService;
 
@@ -68,4 +69,12 @@ public class ReportRestController {
 		Report r = repSer.updatereport(rep);
 		return r ; 
 	}
+	
+	// @PostMapping("/treatreport-bymakingappointment/{reportid}/{iduser1}/{iduser2})")
+	//@ResponseBody
+	//public void ajouterEtAffceterFormationaFormateur( @RequestBody Appointment appointment ,@PathVariable("iduser1") int iduser1,@PathVariable("iduser2") int iduser2,@PathVariable("reportid") Long idreport)
+	//{
+		//repSer.treataReportbyMakingappointment(idreport, iduser1, iduser2, appointment);
+	//}
+	
 }

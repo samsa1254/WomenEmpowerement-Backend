@@ -50,22 +50,24 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return reps;
 	}
 	
-	public void AddandAffectAppointmentoexpertanduser(Appointment appointment, int idexpert,int iduser) {		
+	public Appointment AddandAffectAppointmentoexpertanduser(Appointment appointment, int idexpert,int iduser) {		
 		User e = expRep.findById(idexpert).get();
 	    User u = expRep.findById(iduser).get();
 	    boolean valide=false;
 	    List<Disponibilite> disp=e.getDisponibilite();
 	    for(Disponibilite dis:disp) {
-	    	if (appointment.getDateAppointment().after(dis.getDatedebut()) && appointment.getDateAppointment().before(dis.getDatefin())&& dis.getEtat()!="booked"|| appointment.getDateAppointment()==dis.getDatedebut() && dis.getEtat()!="booked" ||appointment.getDateAppointment()==dis.getDatefin() && dis.getEtat()!="booked"   )
+	    	if (appointment.getDateAppointment().after(dis.getDatedebut()) && appointment.getDateAppointment().before(dis.getDatefin())&& dis.getEtat()!="booked"|| appointment.getDateAppointment().equals(dis.getDatedebut()) && dis.getEtat()!="booked" ||appointment.getDateAppointment().equals(dis.getDatefin()) && dis.getEtat()!="booked"   )
 	    	{    
                  valide= true ; 
-	    	} 	
+                 
+	    	}
 	    }
 	    if (valide==true) {
 	    appointment.setUser(u);
 	    appointment.setUserexpert(e);
+	   
 	    for(Disponibilite dis:disp) {
-	    	if (appointment.getDateAppointment().after(dis.getDatedebut()) && appointment.getDateAppointment().before(dis.getDatefin()) )
+	    	if (appointment.getDateAppointment().after(dis.getDatedebut()) && appointment.getDateAppointment().before(dis.getDatefin())|| appointment.getDateAppointment().equals(dis.getDatedebut()) || appointment.getDateAppointment().equals(dis.getDatefin()))
 	       {
 	    		
 	    		dis.setEtat("booked");
@@ -75,6 +77,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	    }
 	    appRep.save(appointment);
 	    }
+	    
+	    return appointment ;
 		
 	}  
 	    
