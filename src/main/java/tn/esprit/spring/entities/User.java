@@ -178,12 +178,7 @@ public class User implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
 	private List<Disponibilite> disponibilite ;
-<<<<<<< HEAD
-	
-	
-	
-=======
->>>>>>> 6d893a7494f6e37b59bfe3d5718887f4ef545225
+
 	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
 	private List<Candidacy> Candidacies  ;

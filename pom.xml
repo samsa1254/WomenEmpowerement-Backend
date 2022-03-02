@@ -70,7 +70,7 @@
 				<artifactId>spring-boot-starter-test</artifactId>
 				<scope>test</scope>
 			</dependency>
-<<<<<<< HEAD
+
 			
 			
 			
@@ -101,7 +101,7 @@
 			            <artifactId>spring-boot-starter-thymeleaf</artifactId>
 			    </dependency>
 
-=======
+
 			<dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-websocket</artifactId>
@@ -110,7 +110,7 @@
     <groupId>org.springframework.security</groupId>
     <artifactId>spring-security-messaging</artifactId>
 </dependency>
->>>>>>> 6d893a7494f6e37b59bfe3d5718887f4ef545225
+
 	</dependencies>
 
 	<build>

@@ -13,15 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-<<<<<<< HEAD
+
 import tn.esprit.spring.entities.Sexe;
-=======
+
 
 import tn.esprit.spring.entities.BlockUser;
 
 import tn.esprit.spring.entities.ExpertSpec;
 
->>>>>>> 6d893a7494f6e37b59bfe3d5718887f4ef545225
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.*;
 
@@ -32,7 +31,6 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	UserRepository UserRepository;
-<<<<<<< HEAD
 	BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 	
 	//Authentification 
@@ -47,11 +45,9 @@ public class UserServiceImpl implements IUserService {
 	
 	
 	
-=======
 	@Autowired
 	BlockUserRepository BlockUserRep ;
 
->>>>>>> 6d893a7494f6e37b59bfe3d5718887f4ef545225
 	@Autowired
 	public UserServiceImpl(UserRepository UserRepository , BlockUserRepository BlockUserRep) {
 		super();

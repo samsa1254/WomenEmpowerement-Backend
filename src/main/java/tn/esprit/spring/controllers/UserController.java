@@ -4,12 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
-=======
 import org.springframework.http.ResponseEntity;
->>>>>>> 6d893a7494f6e37b59bfe3d5718887f4ef545225
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,11 +21,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-<<<<<<< HEAD
 import tn.esprit.spring.entities.ConfirmationToken;
-=======
 import tn.esprit.spring.entities.ExpertSpec;
->>>>>>> 6d893a7494f6e37b59bfe3d5718887f4ef545225
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.ConfirmationTokenRepository;
 import tn.esprit.spring.repository.UserRepository;

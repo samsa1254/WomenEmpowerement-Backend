@@ -21,9 +21,7 @@ public interface IUserService {
 
 	User updateUser(User c);
 
-<<<<<<< HEAD
 	User findUserByUserName(String userName) ;
-=======
 	User findUserByLogin ( String Login );
 	
     Boolean block(String angry, String blocked);
@@ -35,7 +33,6 @@ public interface IUserService {
 	List<User> listeDeUserParexpertspeciality(ExpertSpec spec);
 	
 	
->>>>>>> 6d893a7494f6e37b59bfe3d5718887f4ef545225
 
 	
 }
