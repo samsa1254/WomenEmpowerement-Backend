@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,11 +31,11 @@ public class Report {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idReport")
-    private long id ; 
+    private long id; 
 	private String subject; 
 	private Date reportDate;
 	private String status;
-	
+	@JsonIgnore
 	@ManyToOne 
 	private User user ; 
 

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,18 +37,22 @@ public class Publication {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long idPublication;
 	private String post ; 
+	
 	private Date date ; 
 	private String state ; 
 	
-	@ManyToMany (mappedBy = "publications")
+	@ManyToOne
 	@JsonIgnore
-	private List<User> users ; 
+	private User user ; 
 	
-	@OneToMany(mappedBy = "publication")
+	@OneToMany(cascade = CascadeType.ALL , mappedBy =  "publication")
 	private List<Reaction> reactions ; 
 	
 	@OneToMany (cascade = CascadeType.ALL , mappedBy =  "publication")
 	private List<CommentD> commentDs;
+	
+	@OneToMany(cascade = CascadeType.ALL , mappedBy = "publication")
+	private List<DBFile> dbFiles ; 
 	
 	
 	

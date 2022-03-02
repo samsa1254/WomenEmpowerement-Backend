@@ -15,8 +15,13 @@ import tn.esprit.spring.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-	List<User> findByexpertspeciality(ExpertSpec spec);
+ 
+
 	
+	User findByLogin(String Login) ;
+  List<User> findByexpertspeciality(ExpertSpec spec);
+	
+
 
 
 }

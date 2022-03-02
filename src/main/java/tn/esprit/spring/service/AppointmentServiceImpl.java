@@ -17,7 +17,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Autowired
 	private AppointmentRepository appRep ; 
 	@Autowired
-	private UserRepository expRep ;
+	private UserRepository uRep ;
 	@Autowired
 	private DisponibiliteRepository disRep ;
 	@Override
@@ -50,22 +50,30 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return reps;
 	}
 	
+
 	public void AddandAffectAppointmentoexpertanduser(Appointment appointment, int idexpert,int iduser) {		
-		User e = expRep.findById(idexpert).get();
-	    User u = expRep.findById(iduser).get();
+		User e = uRep.findById(idexpert).get();
+	    User u = uRep.findById(iduser).get();
+
 	    boolean valide=false;
 	    List<Disponibilite> disp=e.getDisponibilite();
 	    for(Disponibilite dis:disp) {
-	    	if (appointment.getDateAppointment().after(dis.getDatedebut()) && appointment.getDateAppointment().before(dis.getDatefin())&& dis.getEtat()!="booked"|| appointment.getDateAppointment()==dis.getDatedebut() && dis.getEtat()!="booked" ||appointment.getDateAppointment()==dis.getDatefin() && dis.getEtat()!="booked"   )
+	    	if (appointment.getDateAppointment().after(dis.getDatedebut()) && appointment.getDateAppointment().before(dis.getDatefin())&& dis.getEtat()!="booked"|| appointment.getDateAppointment().equals(dis.getDatedebut()) && dis.getEtat()!="booked" ||appointment.getDateAppointment().equals(dis.getDatefin()) && dis.getEtat()!="booked"   )
 	    	{    
                  valide= true ; 
-	    	} 	
+                 
+	    	}
 	    }
 	    if (valide==true) {
 	    appointment.setUser(u);
 	    appointment.setUserexpert(e);
+
+	    e.getAppointmentse().add(appointment);
+	    e.getAppointmentsu().add(appointment);
+	    }
+	   
 	    for(Disponibilite dis:disp) {
-	    	if (appointment.getDateAppointment().after(dis.getDatedebut()) && appointment.getDateAppointment().before(dis.getDatefin()) )
+	    	if (appointment.getDateAppointment().after(dis.getDatedebut()) && appointment.getDateAppointment().before(dis.getDatefin())|| appointment.getDateAppointment().equals(dis.getDatedebut()) || appointment.getDateAppointment().equals(dis.getDatefin()))
 	       {
 	    		
 	    		dis.setEtat("booked");
@@ -75,7 +83,28 @@ public class AppointmentServiceImpl implements AppointmentService {
 	    }
 	    appRep.save(appointment);
 	    }
-		
+
+	
+
+	@Override
+	public List<Appointment> getuserappointments(int iduser) {
+		User u=uRep.findById(iduser).get();
+		List<Appointment>a=u.getAppointmentsu();
+		return a;
+	}  
+	
+	@Override
+	public List<Appointment> getexpertappointments(int iduser) {
+		User u=uRep.findById(iduser).get();
+		List<Appointment>a=u.getAppointmentse();
+		return a;
+	}  
+	
+	@Override
+	public List<Appointment> getadminappointments(int iduser) {
+		User u=uRep.findById(iduser).get();
+		List<Appointment>a=u.getAppointmentsa();
+		return a;
 	}  
 	    
 

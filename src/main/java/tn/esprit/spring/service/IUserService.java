@@ -20,7 +20,15 @@ public interface IUserService {
 	User retrieveUser(int id);
 
 	User updateUser(User c);
+
+	User findUserByLogin ( String Login );
 	
+    Boolean block(String angry, String blocked);
+	
+	Boolean unblock(String angry, String blocked);
+	
+	Boolean blockControl(String angry, String blocked);
+
 	List<User> listeDeUserParexpertspeciality(ExpertSpec spec);
 	
 	
