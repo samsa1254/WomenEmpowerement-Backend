@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.Api;
@@ -15,6 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.Builder.Default;
 
 @Entity
 @Getter
@@ -63,12 +66,15 @@ public class User implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private Role role; 
 	
-	
+    @Column(columnDefinition = "boolean default false",nullable = false)
+    private Boolean isEnabled;
+
 	//For Women Only 
 
 	@Column(nullable = true)
 	private Date subscribtion ; 
 
+	
 	
 	
 	// For Admin 
@@ -168,7 +174,7 @@ public class User implements Serializable{
 	
 	
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
 	private List<Candidacy> Candidacies  ;
 

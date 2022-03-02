@@ -15,6 +15,7 @@ import tn.esprit.spring.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-
+	User findByLogin(String Login);
+    User findByEmailIgnoreCase(String email);
 
 }

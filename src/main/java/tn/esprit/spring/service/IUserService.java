@@ -20,5 +20,7 @@ public interface IUserService {
 
 	User updateUser(User c);
 
+	User findUserByUserName(String userName) ;
+
 	
 }
