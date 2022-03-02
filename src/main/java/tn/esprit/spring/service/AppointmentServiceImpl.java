@@ -50,9 +50,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return reps;
 	}
 	
+
 	public void AddandAffectAppointmentoexpertanduser(Appointment appointment, int idexpert,int iduser) {		
 		User e = uRep.findById(idexpert).get();
 	    User u = uRep.findById(iduser).get();
+
 	    boolean valide=false;
 	    List<Disponibilite> disp=e.getDisponibilite();
 	    for(Disponibilite dis:disp) {
@@ -65,8 +67,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 	    if (valide==true) {
 	    appointment.setUser(u);
 	    appointment.setUserexpert(e);
+
 	    e.getAppointmentse().add(appointment);
 	    e.getAppointmentsu().add(appointment);
+	    }
 	   
 	    for(Disponibilite dis:disp) {
 	    	if (appointment.getDateAppointment().after(dis.getDatedebut()) && appointment.getDateAppointment().before(dis.getDatefin())|| appointment.getDateAppointment().equals(dis.getDatedebut()) || appointment.getDateAppointment().equals(dis.getDatefin()))
@@ -79,9 +83,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	    }
 	    appRep.save(appointment);
 	    }
-	    
-		
-	}
+
+	
 
 	@Override
 	public List<Appointment> getuserappointments(int iduser) {

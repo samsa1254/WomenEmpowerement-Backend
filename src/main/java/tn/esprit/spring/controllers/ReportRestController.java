@@ -76,4 +76,5 @@ public class ReportRestController {
 	{
 		repSer.treataReportbyMakingappointment(idreport, iduser1, iduser2,iduser3,appointment);
 	}
+
 }

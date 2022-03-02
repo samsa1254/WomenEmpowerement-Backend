@@ -31,7 +31,7 @@ public class Report {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idReport")
-    private long id ; 
+    private long id; 
 	private String subject; 
 	private Date reportDate;
 	private String status;
