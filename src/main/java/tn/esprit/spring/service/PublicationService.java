@@ -1,5 +1,6 @@
 package tn.esprit.spring.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -14,4 +15,5 @@ public interface PublicationService {
 	public void deletepubById ( Long id );
 	public Publication retrievebyId ( Long id );
 	public List<Publication> retrieveallPubs ();
+	public List<Publication> tendency ( );
 }

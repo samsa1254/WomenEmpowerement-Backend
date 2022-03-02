@@ -2,6 +2,8 @@ package tn.esprit.spring.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Candidacy;
@@ -13,5 +15,9 @@ public interface CandidacyService {
 	public Candidacy Affect( Candidacy c , Long ido, int idu);
 	public Candidacy updatereCandidacy(Candidacy cand);
 	public void deleteCandidacy ( Long id );
+	public List<Candidacy> getCandidacyByOffer(Long idoff);	
+	public List<Candidacy> FilterByState(String name , String state);
+	public Candidacy ApproveCandid ( Long id, int s );
+	
 	
 }

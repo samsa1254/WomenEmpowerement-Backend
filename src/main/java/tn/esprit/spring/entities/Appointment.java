@@ -31,13 +31,22 @@ public class Appointment implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idAppointment")
-    private long id ; 
+    private int id ; 
 	private String reason ; 
 	private Date dateAppointment;
 	
 	@ManyToOne
 	@JsonIgnore
-	private User user ; 
+	private User userexpert ;
+	
+	@ManyToOne
+	@JsonIgnore
+	private User user ;
+	
+	@ManyToOne
+	@JsonIgnore
+	private User usera ;
+	
 	
 	
 

@@ -24,14 +24,18 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Disponibilite implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idDisponibilite")
     private long id ; 
 	private Date datedebut ; 
 	private Date datefin;
-	
-	@ManyToOne
+	public String etat;
 	@JsonIgnore
+	@ManyToOne
 	private User user ;
 }

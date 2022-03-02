@@ -26,6 +26,8 @@ public class FormationRestController {
 		FormationSer.ajouterEtAffceterFormationaFormateur(formation, idFormateur);
 	}
 	
+	
+	
 	@GetMapping("/revenuFormation/{idFormation}")
 	@ResponseBody
 	public Integer getRevenuByFormation(@PathVariable("idFormation") Long idFormation) {

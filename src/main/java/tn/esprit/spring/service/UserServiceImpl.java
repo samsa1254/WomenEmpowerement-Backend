@@ -2,6 +2,7 @@ package tn.esprit.spring.service;
 
 
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,7 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import tn.esprit.spring.entities.Sexe;
+=======
+
+import tn.esprit.spring.entities.BlockUser;
+
+import tn.esprit.spring.entities.ExpertSpec;
+
+>>>>>>> 6d893a7494f6e37b59bfe3d5718887f4ef545225
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.*;
 
@@ -23,6 +32,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	UserRepository UserRepository;
+<<<<<<< HEAD
 	BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 	
 	//Authentification 
@@ -37,8 +47,13 @@ public class UserServiceImpl implements IUserService {
 	
 	
 	
+=======
 	@Autowired
-	public UserServiceImpl(UserRepository UserRepository) {
+	BlockUserRepository BlockUserRep ;
+
+>>>>>>> 6d893a7494f6e37b59bfe3d5718887f4ef545225
+	@Autowired
+	public UserServiceImpl(UserRepository UserRepository , BlockUserRepository BlockUserRep) {
 		super();
 	}
 
@@ -184,6 +199,12 @@ public class UserServiceImpl implements IUserService {
 		UserRepository.deleteById(id);
 	}
 	
+		
+		@Override
+	public List<User> listeDeUserParexpertspeciality(ExpertSpec spec){
+			return UserRepository.findByexpertspeciality(spec);
+			
+		}
 	
 	
 	
@@ -209,4 +230,82 @@ public class UserServiceImpl implements IUserService {
 	        }
 	        return aCrypter;
 	    }
+
+
+
+
+
+	@Override
+	public User findUserByLogin(String Login) {
+		User u = UserRepository.findByLogin(Login);
+		return u;
+	}
+
+
+
+	//fcts reliés au blockage et au chat one to one . 
+
+	@Override
+	public Boolean block(String angryName, String blockedName) {
+		User angry = UserRepository.findByLogin(angryName);
+		User blocked = UserRepository.findByLogin(blockedName);
+		if(angry != null  && blocked != null) 
+		{
+			BlockUser blockUser = new BlockUser();
+		
+			blockUser.setAngryId(angry.getIduser());
+			blockUser.setBlockedId(blocked.getIduser());
+			BlockUserRep.save(blockUser);
+			return true ;
+			
+		}
+		return false;
+	}
+
+
+
+
+
+	@Override
+	public Boolean unblock(String angryName, String blockedName) {
+		User angry = UserRepository.findByLogin(angryName);
+		User blocked = UserRepository.findByLogin(blockedName);
+		if(angry != null  && blocked != null) 
+		{
+			try {
+				BlockUserRep.unblock(angry.getIduser(), blocked.getIduser());
+			} 
+			catch(Exception e){
+				return false;
+			}
+		}
+		
+		return true;
+	} 
+
+
+
+
+
+	@Override
+	public Boolean blockControl(String angryName, String blockedName) {
+		User angry = UserRepository.findByLogin(angryName);
+		User blocked = UserRepository.findByLogin(blockedName);
+		List<BlockUser> listOfBlock = BlockUserRep.findAllByAngryId(angry.getIduser());
+		ArrayList<Integer> BlockedIds = new ArrayList<Integer>();
+		int nbr = listOfBlock.size();
+		for(int flag = 0 ; flag < nbr ; flag++)
+		{
+			BlockedIds.add(listOfBlock.get(flag).getBlockedId());
+		}
+		if(BlockedIds.contains(blocked.getIduser()))	
+		{
+			return true ;
+		}
+		return false;
+	}
+	
+	
+	
+	
 }

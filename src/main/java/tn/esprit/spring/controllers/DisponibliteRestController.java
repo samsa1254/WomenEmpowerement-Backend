@@ -1,8 +1,11 @@
 package tn.esprit.spring.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,4 +72,15 @@ public class DisponibliteRestController {
 			Disponibilite d = dispSer.updateDisponibilite(disp);
 			return d ; 
 		}
+		
+		
+		@GetMapping("/retrieve-dispbyperiod/{datedebut}/{datefin}")
+		@ApiOperation(value = "recuperer une disponibilite par periode  ")
+		@ResponseBody
+		public List<Disponibilite> getavailibilitybyperiod (@PathVariable("datedebut")@DateTimeFormat(iso=ISO.DATE) Date datedebut, @PathVariable("datefin")@DateTimeFormat(iso=ISO.DATE) Date Datefin)
+		{   
+			return  dispSer.findByPeriod(datedebut, Datefin);   
+		}
+		
+		
 }

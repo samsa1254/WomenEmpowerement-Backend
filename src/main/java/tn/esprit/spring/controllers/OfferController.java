@@ -43,6 +43,12 @@ public class OfferController {
 	{
 		return OS.retrievebyId(ido);   
 	}
+	@GetMapping("/RetrieveOfferByName/{name}")
+	@ResponseBody
+	public List<Offer> getOffer (@PathVariable("name") String name)
+	{
+		return OS.GetOfferByName(name);   
+	}
 	
 	@PostMapping("/AddOffer")
 	@ResponseBody 
