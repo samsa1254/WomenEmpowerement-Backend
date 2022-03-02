@@ -1,6 +1,12 @@
 package tn.esprit.spring.service;
 
+import java.util.ArrayList;
+
+
 import java.util.List;
+
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +48,21 @@ public class PublicationServiceImpl implements PublicationService {
 		List<Publication> pubs = (List<Publication>) PublicationRep.findAll();
 		return pubs;
 	}
+
+	@Override
+	public List<Publication> tendency() {
+		List<Publication> pubstendency =  new ArrayList<Publication>();
+		List<Long> pubids = PublicationRep.Tendency();
+		for (Long item : pubids) {
+			Publication p= PublicationRep.findById(item).get();
+			pubstendency.add(p);
+			
+		}
+		
+		return pubstendency;
+	}
+
+	
+			
 
 }

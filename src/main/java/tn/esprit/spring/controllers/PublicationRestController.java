@@ -71,4 +71,11 @@ public class PublicationRestController {
 		Publication p = PubSer.updatePub(pub);
 		return p ; 
 	}
+	@GetMapping("/retrieve-pubtendency")
+	@ApiOperation(value = "recuperer les tendances pub  ")
+	@ResponseBody
+	public List<Publication> getPublicationtendency ( )
+	{
+		return PubSer.tendency();   
+	}
 }

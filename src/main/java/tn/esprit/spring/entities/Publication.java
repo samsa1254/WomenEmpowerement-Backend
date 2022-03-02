@@ -46,12 +46,15 @@ public class Publication {
 	private User user ; 
 	
 	@OneToMany(cascade = CascadeType.ALL , mappedBy =  "publication")
+	@JsonIgnore
 	private List<Reaction> reactions ; 
 	
 	@OneToMany (cascade = CascadeType.ALL , mappedBy =  "publication")
+	@JsonIgnore
 	private List<CommentD> commentDs;
 	
 	@OneToMany(cascade = CascadeType.ALL , mappedBy = "publication")
+	@JsonIgnore
 	private List<DBFile> dbFiles ; 
 	
 	
