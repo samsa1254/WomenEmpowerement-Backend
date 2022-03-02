@@ -36,18 +36,17 @@ public class Offer {
 	@Column (name = "Id_offer")
 	private long id;
 	
-
 	private String name;
 	
-	
 	private String type;
-	
-	
+		
 	private String status;
-	
 	
 	private Date date_Interview;
 	
+	private float salary;
+	
+	private String location;
 	
 	//@OneToMany(mappedBy = "offer")
 	//private List<Favorites> favorites;

@@ -116,9 +116,6 @@ public class User implements Serializable{
 	@OneToMany(mappedBy ="user" )
 	private List<Message> messages  ; 
 	
-	@JsonIgnore
-	@OneToMany(mappedBy ="user" )
-	private List<Reaction> reactions  ; 
 	
 	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
@@ -143,7 +140,7 @@ public class User implements Serializable{
 	private List<Cagnotte> cagnottes;
 	
 	@JsonIgnore
-	@ManyToMany
+	@OneToMany(mappedBy = "user")
 	private List<Publication> publications ;
 	
 	@JsonIgnore
@@ -162,7 +159,7 @@ public class User implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
 	private List<Comment> comments  ; 
-	
+	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
 	private List<Candidacy> Candidacies  ;
 

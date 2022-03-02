@@ -14,5 +14,6 @@ public interface OfferService {
 	public void deleteOfferById ( Long id );
 	public Offer retrievebyId ( Long id );
 	public List<Offer> retrieveallOffers ();
+	public List<Offer> GetOfferByName(String name);
 	
 }

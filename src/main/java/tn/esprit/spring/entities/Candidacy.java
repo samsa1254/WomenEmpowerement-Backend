@@ -38,14 +38,18 @@ public class Candidacy {
 	private long id;
 	
 	private String CandidName;
+	
 	private String CV;
+	
 	private String State;
     
-	
 	private Date date_Of_Candid;
+
+	
 	@JsonIgnore
 	@ManyToOne
 	private Offer offer;
+	
 	@JsonIgnore
 	@ManyToOne
 	private User user ; 
