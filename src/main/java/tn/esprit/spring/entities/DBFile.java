@@ -1,5 +1,6 @@
 package tn.esprit.spring.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -25,6 +26,7 @@ import lombok.Setter;
 @Api
 public class DBFile {
 	@Id
+	@Column(length = 50)
 	private String id ; 
 	private String name ; 
 	private String type ; 
@@ -43,5 +45,4 @@ public class DBFile {
 		this.type = type ; 
 		this.data =data ;
 	}
-
 }
