@@ -1,5 +1,6 @@
 package tn.esprit.spring.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -26,17 +27,26 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Appointment {
+public class Appointment implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idAppointment")
-    private long id ; 
+    private int id ; 
 	private String reason ; 
 	private Date dateAppointment;
 	
 	@ManyToOne
 	@JsonIgnore
-	private User user ; 
+	private User userexpert ;
+	
+	@ManyToOne
+	@JsonIgnore
+	private User user ;
+	
+	@ManyToOne
+	@JsonIgnore
+	private User usera ;
+	
 	
 	
 

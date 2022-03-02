@@ -37,20 +37,25 @@ public class Publication {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long idPublication;
 	private String post ; 
+	
 	private Date date ; 
 	private String state ; 
 	
 	@ManyToOne
 	@JsonIgnore
-	private User user  ; 
+	private User user ; 
 	
-	@OneToMany(cascade = CascadeType.ALL ,mappedBy = "publication")
-	private List<Reaction> reactions ;
-	
-
+	@OneToMany(cascade = CascadeType.ALL , mappedBy =  "publication")
+	@JsonIgnore
+	private List<Reaction> reactions ; 
 	
 	@OneToMany (cascade = CascadeType.ALL , mappedBy =  "publication")
+	@JsonIgnore
 	private List<CommentD> commentDs;
+	
+	@OneToMany(cascade = CascadeType.ALL , mappedBy = "publication")
+	@JsonIgnore
+	private List<DBFile> dbFiles ; 
 	
 	
 	

@@ -54,7 +54,7 @@ public class User implements Serializable{
 	private String email ; 
 	
 	@Column(nullable = false)
-	private String login ; 
+	private String login; 
 	
 	@Column(nullable = false)
 	private String password ; 
@@ -116,10 +116,19 @@ public class User implements Serializable{
 	@OneToMany(mappedBy ="user" )
 	private List<Message> messages  ; 
 	
+
+	
+	@JsonIgnore
+	@OneToMany(mappedBy ="userexpert" )
+	private List<Appointment> appointmentse  ;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
-	private List<Appointment> appointments  ; 
+	private List<Appointment> appointmentsu  ; 
+	
+	@JsonIgnore
+	@OneToMany(mappedBy ="usera" )
+	private List<Appointment> appointmentsa  ;
 	
 
 	
@@ -159,6 +168,10 @@ public class User implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
 	private List<Comment> comments  ; 
+	
+	@JsonIgnore
+	@OneToMany(mappedBy ="user" )
+	private List<Disponibilite> disponibilite ;
 	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
 	private List<Candidacy> Candidacies  ;

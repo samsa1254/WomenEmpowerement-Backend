@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import tn.esprit.spring.entities.ExpertSpec;
 import tn.esprit.spring.entities.User;
 
 
@@ -14,6 +15,12 @@ import tn.esprit.spring.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+ 
+
+	
+	User findByLogin(String Login) ;
+  List<User> findByexpertspeciality(ExpertSpec spec);
+	
 
 
 

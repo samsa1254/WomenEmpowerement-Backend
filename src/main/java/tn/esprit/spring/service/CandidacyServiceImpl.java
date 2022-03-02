@@ -45,19 +45,21 @@ public class CandidacyServiceImpl  implements CandidacyService{
 		CR.save(Candidacy);
 		return Candidacy;
 	}
+	//lll
 	
 	@Override
 	public Candidacy ApproveCandid(Long id , int s) {
 		Candidacy c = CR.findById(id).get();
-			do {
+			if ((s<4) && (s>0)) {
 		if (s==1)
-		c.setState("Approve");
+		c.setState("Approved");
 		else if (s==2)
 		c.setState("Denied");
 		else if (s==3)
 		c.setState("On Hold");	
+		
 		CR.save(c);
-			}while((s<4) && (s>0));		
+			}			
 		return c;
 	}
 	@Override
@@ -72,14 +74,12 @@ public class CandidacyServiceImpl  implements CandidacyService{
 	    
 		Offer p = OR.findById(ido).get();
 		User u = UR.findById(idu).get();
-		
+	
 		String um = u.getEmail();
 		String un = u.getName();
 	    String pn = p.getName();
 	    String da = date.toString();
 
-		
-		
 		String nameoffer = p.getName();
 		c.setCandidName(nameoffer);
 		c.setDate_Of_Candid(date);
@@ -92,6 +92,7 @@ public class CandidacyServiceImpl  implements CandidacyService{
 		}
 		return c;
 
+		
 	}
 	@Override
 	public List<Candidacy> getCandidacyByOffer(Long idoff) {	
