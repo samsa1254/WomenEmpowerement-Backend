@@ -1,5 +1,6 @@
 package tn.esprit.spring.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -14,5 +15,9 @@ public interface DisponibiliteService {
 	public void deleteDispById ( Long id );
 	public Disponibilite retrievebyId ( Long id );
 	public List<Disponibilite> retrieveallDisps ();
+	List<Disponibilite> findBydatedebut(Date dated);
+	List<Disponibilite> findBydatefin(Date datef);
+	List<Disponibilite> findByPeriod(Date dated,Date datef);
+	
 
 }

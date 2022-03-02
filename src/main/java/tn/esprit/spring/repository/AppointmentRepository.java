@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import tn.esprit.spring.entities.Appointment;
 @Repository
-public interface AppointmentRepository extends CrudRepository<Appointment, Long>{
+public interface AppointmentRepository extends CrudRepository<Appointment, Integer>{
 
 }

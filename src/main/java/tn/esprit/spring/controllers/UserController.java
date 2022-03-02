@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tn.esprit.spring.entities.ExpertSpec;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.service.IUserService;
 
@@ -63,6 +64,7 @@ public class UserController {
 	return UserService.updateUser(User);
 	}
 	
+
 	@GetMapping("/blockUser")
 	public ResponseEntity<Void> block(@RequestParam String angryUser, @RequestParam String blockedUser) throws Exception {
 		UserService.block(angryUser, blockedUser);
@@ -77,6 +79,11 @@ public class UserController {
 		} else {
 			return ResponseEntity.badRequest().build();
 		}
+
+	@GetMapping("/liste-expertbyspeciality/{speciality}")
+	List<User> listeDeexpertParspecialite(@PathVariable("speciality") ExpertSpec spec){
+		return UserService.listeDeUserParexpertspeciality(spec);
+
 	}
 
 
