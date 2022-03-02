@@ -126,6 +126,10 @@ public class User implements Serializable{
 	@OneToMany(mappedBy ="user" )
 	private List<Appointment> appointmentsu  ; 
 	
+	@JsonIgnore
+	@OneToMany(mappedBy ="usera" )
+	private List<Appointment> appointmentsa  ;
+	
 
 	
 	@JsonIgnore

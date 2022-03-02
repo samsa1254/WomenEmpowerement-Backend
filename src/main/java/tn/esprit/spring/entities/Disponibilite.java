@@ -31,7 +31,7 @@ public class Disponibilite implements Serializable{
 	private Date datedebut ; 
 	private Date datefin;
 	public String etat;
-	
+	@JsonIgnore
 	@ManyToOne
 	private User user ;
 }

@@ -72,8 +72,35 @@ public class AppointmentRestController {
 	
 	@PostMapping("/add-affectappointment/{idexpert}/{iduser})")
 	@ResponseBody
-	public void ajouterEtAffceterFormationaFormateur( @RequestBody Appointment appointment ,@PathVariable("idexpert") int idexpert,@PathVariable("iduser") int iduser)
+	public void ajouterEtAffecterrendezvousauexpertetutilisteur( @RequestBody Appointment appointment ,@PathVariable("idexpert") int idexpert,@PathVariable("iduser") int iduser)
 	{
 		AppSer.AddandAffectAppointmentoexpertanduser(appointment, idexpert, iduser);
 	}
+	
+	
+	@GetMapping("/retrieve-userapp/{iduser}")
+	@ApiOperation(value = "recuperer les rendez-vous de l'utilisateur  ")
+	@ResponseBody
+	public List<Appointment> getuserAppointment (@PathVariable("iduser") int iduser)
+	{
+		return AppSer.getuserappointments(iduser);   
+	}
+	
+	@GetMapping("/retrieve-expertapp/{idexp}")
+	@ApiOperation(value = "recuperer les rendez-vous de l'expert  ")
+	@ResponseBody
+	public List<Appointment> getexpAppointment (@PathVariable("idexp") int idexp)
+	{
+		return AppSer.getexpertappointments(idexp);   
+	}
+	
+	@GetMapping("/retrieve-adminapp/{idadmin}")
+	@ApiOperation(value = "recuperer les rendez-vous de l'admin  ")
+	@ResponseBody
+	public List<Appointment> getadminAppointment (@PathVariable("idadmin") int idadmin)
+	{
+		return AppSer.getexpertappointments(idadmin);   
+	}
+	
+	
 }
