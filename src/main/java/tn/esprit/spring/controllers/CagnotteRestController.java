@@ -2,6 +2,12 @@ package tn.esprit.spring.controllers;
 
 import java.util.List;
 
+import com.stripe.exception.AuthenticationException;
+import com.stripe.exception.CardException;
+import com.stripe.exception.InvalidRequestException;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
+import com.stripe.model.PaymentIntent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +26,7 @@ import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Cagnotte;
 
 import tn.esprit.spring.service.CagnotteService;
+import tn.esprit.spring.service.StripeService;
 
 @Api(tags = "Cagnotte Management")
 
@@ -30,6 +37,9 @@ public class CagnotteRestController {
 
 	@Autowired
 	private CagnotteService cagnotteService;
+
+	@Autowired
+	private StripeService stripeService;
 
 	@PutMapping("/addCagnotte")
     public ResponseEntity<Cagnotte> addCagnotte(@RequestBody Cagnotte cagnotte) {
@@ -57,4 +67,51 @@ public class CagnotteRestController {
 		 	cagnotteService.deleteCagnotte(id);
 		 	 return new ResponseEntity<>(HttpStatus.OK);
 	    }
+
+	    /*------------------------------Payment API--------------------------*/
+
+	//http://localhost:8089/SpringMVC/Cagnotte/customer/
+	@PostMapping("/customer/{idUser}")
+	@ResponseBody
+	public String createCustomer(@PathVariable("idUser") int idUser) {
+		return stripeService.createStripeCustomer(idUser);
+	}
+
+	// http://localhost:8089/SpringMVC/Cagnotte/customer/customer_id_from_stripeApi_acount/4242424242424242/11/2026/123
+	@PostMapping("/customer/{customerId}/{carta}/{expMonth}/{expYear}/{cvc}")
+	@ResponseBody
+	public String createCustumorStripe(@PathVariable("customerId") String customerId, @PathVariable("carta") String carta,
+								 @PathVariable("expMonth") String expMonth, @PathVariable("expYear") String expYear,
+								 @PathVariable("cvc") String cvc) throws StripeException {
+		return stripeService.createCustumorStripe(customerId, carta, expMonth, expYear, cvc);
+	}
+
+	// http://localhost:8089/SpringMVC/Cagnotte/paymentintent
+	/*
+	 * { "description":"test la methode payment", "amount":"10000",
+	 * "currency":"EUR" }
+	 */
+	@PostMapping("/paymentintent")
+	public String payment(@RequestBody Charge chargeRequest) throws StripeException {
+		return stripeService.paymentIntent(chargeRequest);
+
+	}
+
+	// http://localhost:8089/SpringMVC/Cagnotte/confirm/{id}
+	@PostMapping("/confirm/{id}")
+	public ResponseEntity<String> confirm(@PathVariable("id") String id) throws StripeException {
+		PaymentIntent paymentIntent = stripeService.confirm(id);
+		String paymentStr = paymentIntent.toJson();
+		return new ResponseEntity<>(paymentStr, HttpStatus.OK);
+	}
+
+	//////              1/4242424242424242/11/2026/123
+	@PostMapping("/pay/{idc}/{carta}/{expMonth}/{expYear}/{cvc}")
+	public void Pay(@PathVariable("idc") int idc, @PathVariable("carta") String carta,
+					@PathVariable("expMonth") int expMonth, @PathVariable("expYear") int expYear,
+					@PathVariable("cvc") String cvc) throws StripeException{
+		stripeService.Pay(idc,carta,expMonth,expYear,cvc);
+	}
+
+		/*--------------------------------------------------------*/
 }

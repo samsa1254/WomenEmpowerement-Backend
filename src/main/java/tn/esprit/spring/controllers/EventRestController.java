@@ -3,40 +3,47 @@ package tn.esprit.spring.controllers;
 import java.io.IOException;
 import java.util.List;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.*;
+import org.springframework.mail.*;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.io.ByteArrayInputStream;
 
 import tn.esprit.spring.entities.Event;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.EventRepository;
 import tn.esprit.spring.service.*;
+import utils.PagingHeaders;
+import utils.PagingResponse;
 import io.swagger.annotations.Api;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.In;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.*;
+
+import lombok.extern.slf4j.Slf4j;
+import net.kaczmarzyk.spring.data.jpa.domain.Between;
+import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.multipart.MultipartFile;
+
+
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 
 
 @Api(tags = "Event Management")
-
 @RestController
 @RequestMapping("/Event")
 public class EventRestController {
@@ -76,7 +83,7 @@ public class EventRestController {
 		eventService.deleteEvent(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+/*
 	@GetMapping("/sort")
 	public ResponseEntity<Page<Event>> findEventByCriteria(
 			@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
@@ -88,7 +95,9 @@ public class EventRestController {
 		Page<Event> evn = eventService.getAllEvent(pageable);
 		return ResponseEntity.ok().body(evn);
 	}
-
+	
+	*/
+/*
 	@GetMapping("/search/{title}")
 	public ResponseEntity<Page<Event>> findByTitle(@PathVariable("title") String title, @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
 			@RequestParam(value = "size", defaultValue = "10", required = false) Integer size){
@@ -96,7 +105,7 @@ public class EventRestController {
 		Page<Event> evn = eventService.findByTitle(title,pageable);	
 		return ResponseEntity.ok().body(evn);
 	}
-	
+	*/
 	
 	
 	@PostMapping("/send/{id}")
@@ -134,4 +143,32 @@ public class EventRestController {
 	}
 	
 	
+
+	@Transactional
+    @GetMapping(value = "search", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Event>> get(
+    		@And({
+                    @Spec(path = "title", params = "title", spec = Like.class),
+                    @Spec(path = "type", params = "type", spec = Like.class),
+                    @Spec(path = "dateDebut", params = "DateDebut", spec = Equal.class),
+                    @Spec(path = "createDate", params = {"DateDebut", "dateFin"}, spec = Between.class)
+            }) Specification<Event> spec,
+            Sort sort,
+            @RequestHeader HttpHeaders headers) {
+        final PagingResponse response = eventService.get(spec, headers, sort);
+        return new ResponseEntity<>(response.getElements(), returnHttpHeaders(response), HttpStatus.OK);
+    }
+	
+	
+	public HttpHeaders returnHttpHeaders(PagingResponse response) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(PagingHeaders.COUNT.getName(), String.valueOf(response.getCount()));
+        headers.set(PagingHeaders.PAGE_SIZE.getName(), String.valueOf(response.getPageSize()));
+        headers.set(PagingHeaders.PAGE_OFFSET.getName(), String.valueOf(response.getPageOffset()));
+        headers.set(PagingHeaders.PAGE_NUMBER.getName(), String.valueOf(response.getPageNumber()));
+        headers.set(PagingHeaders.PAGE_TOTAL.getName(), String.valueOf(response.getPageTotal()));
+        return headers;
+    }
+
 }

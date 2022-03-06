@@ -31,10 +31,10 @@ public class Cagnotte {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long idCagnotte;
 	private float amount;
 	
-	@OneToOne (mappedBy= "cagnotte")
+	@OneToOne 
 	private Event event;
 	
 	

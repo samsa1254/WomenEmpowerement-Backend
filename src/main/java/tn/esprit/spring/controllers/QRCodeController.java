@@ -10,8 +10,10 @@ import com.google.zxing.WriterException;
 
 
 import tn.esprit.spring.entities.Cagnotte;
+import tn.esprit.spring.entities.Event;
 import tn.esprit.spring.entities.QRCodeGenerator;
 import tn.esprit.spring.service.CagnotteService;
+import tn.esprit.spring.service.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -23,17 +25,16 @@ import java.util.Base64;
 public class QRCodeController {
 
 	@Autowired
-	private CagnotteService cagnotteService;
+	private EventService eventService;
 	
 	private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/QRCode.png";
 
 	@GetMapping(value = "/genrateQRCode/{id}")
 	public String getQRCode(Model model, @PathVariable("id") Long id) {
-		Cagnotte cag = cagnotteService.getCagnotteById(id);
+		Event ev = eventService.getEventById(id);
 		
-		String medium = "amount :" + cag.getAmount();
-		String github = "amount :" + cag.getAmount() + "amnt=" + cag.getAmount()+ "event:" + cag.getEvent();
-
+		String medium = "title :" + ev.getTitle() + "type:" +ev.getType()+ "dateDebut:"+ev.getDateDebut();
+		String github = "title :" + ev.getTitle() + "type:" +ev.getType()+ "dateDebut:"+ev.getDateDebut();
 		byte[] image = new byte[0];
 		try {
 

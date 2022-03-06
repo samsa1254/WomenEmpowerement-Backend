@@ -18,6 +18,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import tn.esprit.spring.entities.Event;
 
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class GeneratePdfReport {
 ;

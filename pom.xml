@@ -68,12 +68,13 @@
 		<dependency>
                 <groupId>com.stripe</groupId>
                 <artifactId>stripe-java</artifactId>
-                <version>4.2.0</version>
+                <version>18.12.0</version>
         </dependency>
         <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        
         <!-- qr code -->
         <dependency>
 			<groupId>com.lowagie</groupId>
@@ -87,6 +88,14 @@
             <artifactId>javase</artifactId>
             <version>3.4.0</version>
         </dependency>
+        
+        <!-- Recherche  -->
+        <dependency>
+            <groupId>net.kaczmarzyk</groupId>
+            <artifactId>specification-arg-resolver</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+
 	
 	</dependencies>
 

@@ -42,7 +42,7 @@ public class Event {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long idEvent;
 	@NotNull //(message = "date shouldn't be empty")
 	@DateTimeFormat(pattern = "dd/mm/yyyy")
 	private Date dateDebut;
