@@ -43,7 +43,7 @@ public class DBFileRestController {
 	
 	@GetMapping("/{id}")
 	@ResponseBody
-	public DBFile getFile ( @PathVariable String id )
+	public DBFile getFile ( @PathVariable Long id )
 	{
 		return DBFileSer.getFileById(id);
 	}
