@@ -16,4 +16,6 @@ public interface PublicationService {
 	public Publication retrievebyId ( Long id );
 	public List<Publication> retrieveallPubs ();
 	public List<Publication> tendency ( );
+	public List<Publication> MostReacted();
+	public List<String> reacts( Long idpublication);
 }

@@ -35,7 +35,7 @@ import lombok.ToString;
 public class Publication {
 	@Id 
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private long idPublication;
+	private Long idPublication;
 	private String post ; 
 	
 	private Date date ; 
