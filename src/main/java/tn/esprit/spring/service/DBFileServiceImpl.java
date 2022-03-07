@@ -22,11 +22,7 @@ public class DBFileServiceImpl implements DBFileService {
 
 	
 
-	@Override
-	public DBFile getFileById(String id) {
-		
-		return DBFileRep.findById(id).get();
-	}
+	
 
 	@Override
 	public List<DBFile> getFileList() {
@@ -39,7 +35,7 @@ public class DBFileServiceImpl implements DBFileService {
 		List<DBFile> dbFiles = new ArrayList<DBFile>();
 		for (MultipartFile multipartFile : files) {
 			String fileName = multipartFile.getOriginalFilename();
-			DBFile dbFile = new DBFile(UUID.randomUUID().toString(), fileName, multipartFile.getContentType(), multipartFile.getBytes());
+			DBFile dbFile = new DBFile(UUID.randomUUID().getLeastSignificantBits(), fileName, multipartFile.getContentType(), multipartFile.getBytes());
 			
 		dbFiles.add(dbFile);
 		}
@@ -53,7 +49,7 @@ public class DBFileServiceImpl implements DBFileService {
 		List<DBFile> dbFiles = new ArrayList<DBFile>();
 		for (MultipartFile multipartFile : files) {
 			String fileName = multipartFile.getOriginalFilename();
-			DBFile dbFile = new DBFile(UUID.randomUUID().toString(), fileName, multipartFile.getContentType(), multipartFile.getBytes());
+			DBFile dbFile = new DBFile(UUID.randomUUID().getLeastSignificantBits(), fileName, multipartFile.getContentType(), multipartFile.getBytes());
 			dbFile.setPublication(PubRep.findById(idPublication).get());
 	        dbFiles.add(dbFile);
 		}
@@ -61,6 +57,12 @@ public class DBFileServiceImpl implements DBFileService {
 		DBFileRep.saveAll(dbFiles);
 		return dbFiles ;
 		
+	}
+
+	@Override
+	public DBFile getFileById(Long id) {
+	DBFile d =	DBFileRep.findById(id).get();
+		return d;
 	}
 	
 	

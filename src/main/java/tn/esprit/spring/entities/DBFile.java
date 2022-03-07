@@ -26,8 +26,8 @@ import lombok.Setter;
 @Api
 public class DBFile {
 	@Id
-	@Column(length = 500)
-	private String id ; 
+	
+	private Long id ; 
 	private String name ; 
 	private String type ; 
 	@Lob
@@ -38,7 +38,7 @@ public class DBFile {
 	@Nullable
 	private Publication publication ;
 	
-	public DBFile( String id , String name , String type , byte[] data )
+	public DBFile( Long id , String name , String type , byte[] data )
 	{
 		this.id = id ; 
 		this.name = name ; 

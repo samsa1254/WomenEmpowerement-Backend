@@ -16,10 +16,10 @@ import tn.esprit.spring.entities.Publication;
 public interface PublicationRepository extends CrudRepository<Publication, Long> {
 
 	
-	@Query(value = "SELECT publication_id_publication FROM commentd GROUP BY publication_id_publication ORDER BY COUNT(id_com) DESC LIMIT 10",nativeQuery = true )
+	@Query(value = "SELECT c.publication.idPublication FROM CommentD c GROUP BY c.publication.idPublication ORDER BY COUNT(idCom) DESC " )
 	public List<Long> Tendency (  );
 	
-	@Query(value = "SELECT publication_id_publication FROM reaction GROUP BY publication_id_publication ORDER BY COUNT(id) DESC LIMIT 10" ,nativeQuery = true)
+	@Query(value = "SELECT r.publication.idPublication FROM Reaction r GROUP BY r.publication.idPublication ORDER BY COUNT(id) DESC ")
 	public List<Long> MostReacted();
 	
 	@Query(value = "SELECT r.value FROM Reaction r   WHERE r.publication.idPublication = :idPublication GROUP BY r.value ORDER by COUNT(id) DESC ")
