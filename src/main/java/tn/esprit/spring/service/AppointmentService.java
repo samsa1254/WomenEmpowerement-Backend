@@ -1,13 +1,9 @@
 package tn.esprit.spring.service;
 
-import java.util.Date;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import tn.esprit.spring.entities.Appointment;
-import tn.esprit.spring.entities.Formateur;
-import tn.esprit.spring.entities.Formation;
+
 
 @Service
 public interface AppointmentService {
@@ -18,6 +14,9 @@ public interface AppointmentService {
 	public Appointment retrievebyId ( int id );
 	public List<Appointment> retrieveallApps ();
 	public void AddandAffectAppointmentoexpertanduser(Appointment appointment, int idexpert,int iduser);
+	public List<Appointment> getuserappointments(int iduser);
+	public List<Appointment> getexpertappointments(int iduser);
+	public List<Appointment> getadminappointments(int iduser);
 		
 
 }

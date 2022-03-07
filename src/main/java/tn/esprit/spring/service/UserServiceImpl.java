@@ -10,8 +10,11 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+
+import tn.esprit.spring.entities.Sexe;
 
 
 import tn.esprit.spring.entities.BlockUser;
@@ -28,6 +31,20 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	UserRepository UserRepository;
+	BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+	
+	//Authentification 
+	
+	
+	public User findUserByUserName(String Login) {
+	return UserRepository.findByLogin(Login);
+	}
+	
+	
+	
+	
+	
+	
 	@Autowired
 	BlockUserRepository BlockUserRep ;
 
@@ -36,6 +53,7 @@ public class UserServiceImpl implements IUserService {
 		super();
 	}
 
+	
 
 	
 	
@@ -66,9 +84,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User addUser(User c) {
-		c.setPassword(encrypt(c.getPassword()));
-		
-		if (c.getRole().toString().equals("admin"))
+		//c.setPassword(encrypt(c.getPassword()));
+		c.setPassword(bCryptPasswordEncoder.encode(c.getPassword()));
+		if (c.getRole().toString().equals("Admin"))
 		{
 			c.setSubscribtion(null);
 			c.setTutorspeciality(null);
@@ -76,6 +94,8 @@ public class UserServiceImpl implements IUserService {
 			c.setExpertadress(null);
 			c.setExpertnumber(null);
 			c.setExpertspeciality(null);
+			c.setIsEnabled(true);
+
 		}
 		
 		
@@ -87,6 +107,9 @@ public class UserServiceImpl implements IUserService {
 			c.setExpertadress(null);
 			c.setExpertnumber(null);
 			c.setExpertspeciality(null);
+			c.setSexe(Sexe.Women);
+			c.setIsEnabled(true);
+
 		}
 		
 		if (c.getRole().toString().equals("tutor"))
@@ -96,6 +119,8 @@ public class UserServiceImpl implements IUserService {
 			c.setExpertadress(null);
 			c.setExpertnumber(null);
 			c.setExpertspeciality(null);
+			c.setIsEnabled(true);
+
 		}
 		
 		if (c.getRole().toString().equals("expert"))
@@ -104,7 +129,8 @@ public class UserServiceImpl implements IUserService {
 			c.setSubscribtion(null);
 			c.setTutorspeciality(null);
 			c.setTutortype(null);
-			
+			c.setIsEnabled(true);
+
 		}
 
 		UserRepository.save(c);
@@ -117,7 +143,8 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User updateUser(User c) {
-		c.setPassword(encrypt(c.getPassword()));
+		//c.setPassword(encrypt(c.getPassword()));
+		c.setPassword(bCryptPasswordEncoder.encode(c.getPassword()));
 		if (c.getRole().equals("admin"))
 		{
 			c.setSubscribtion(null);
@@ -137,6 +164,7 @@ public class UserServiceImpl implements IUserService {
 			c.setExpertadress(null);
 			c.setExpertnumber(null);
 			c.setExpertspeciality(null);
+			c.setSexe(Sexe.Women);
 		}
 		
 		if (c.getRole().equals("tutor"))

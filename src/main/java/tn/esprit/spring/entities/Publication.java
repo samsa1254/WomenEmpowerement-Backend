@@ -53,9 +53,7 @@ public class Publication {
 	@JsonIgnore
 	private List<CommentD> commentDs;
 	
-	@OneToMany(cascade = CascadeType.ALL , mappedBy = "publication")
-	@JsonIgnore
-	private List<DBFile> dbFiles ; 
+
 	
 	
 	

@@ -45,7 +45,7 @@ public class CandidacyController {
 	
 	@PostMapping("/Affect/{ido}/{idu}")
 	@ResponseBody
-	public void ajouterEtAffceterreactionPub( @RequestBody Candidacy Candidacy ,@PathVariable("ido") Long ido,@PathVariable("idu") int idu)
+	public void Affect( @RequestBody Candidacy Candidacy ,@PathVariable("ido") Long ido,@PathVariable("idu") int idu)
 	{
 		CS.Affect(Candidacy, ido, idu);
 	}
@@ -65,4 +65,26 @@ public class CandidacyController {
 		
 		return CS.updatereCandidacy(cand); 
 	}
+	@PutMapping("/ApproveCandid/{id}/{s}")
+	@ResponseBody
+	public Candidacy CandidacyApproveCandid(@PathVariable("id") Long id , @PathVariable("s") int s  )
+	{
+		
+		return CS.ApproveCandid(id, s); 
+	}
+	
+	@GetMapping("/GetCandidbyOffer/{id}/{name}")
+	@ResponseBody
+	public List<Candidacy> GetCandidByOffer (@PathVariable("id") Long id)
+	{
+		return CS.getCandidacyByOffer(id);   
+	}
+	
+	@GetMapping("/GetCandidbyState/{name}/{state}")
+	@ResponseBody
+	public List<Candidacy> GetCandidbyState (@PathVariable("name") String name ,@PathVariable("state") String state)
+	{
+		return CS.FilterByState(name , state);   
+	}
+
 }

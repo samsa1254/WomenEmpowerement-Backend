@@ -11,8 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.sun.istack.NotNull;
 
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -31,20 +34,33 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Api
 public class Event {
-	@Id 
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Long id ; 
-	private Date date ; 
-	@Enumerated(EnumType.STRING)
-	private Type type ; 
-	private String Description ; 
-	private String Title ; 
-	@ManyToOne
-	@JsonIgnore
-	private User host;
 	
-	@ManyToMany (mappedBy = "events")
-	@JsonIgnore
-	private List<User> users  ; 
+
+	public enum Type {
+		Charity, Support_Group, Self_Help_Plan, Supportive_Psychotherapy
+	}
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idEvent;
+	@NotNull //(message = "date shouldn't be empty")
+	@DateTimeFormat(pattern = "dd/mm/yyyy")
+	private Date dateDebut;
+	@NotNull //(message = "date shouldn't be empty")
+	@DateTimeFormat(pattern = "dd/mm/yyyy")
+	private Date dateFin;
+	@Enumerated(EnumType.STRING)
+	private Type type;
+	@NotNull //(message = "description shouldn't be empty")
+	private String description;
+	@NotNull //(message = "title shouldn't be empty")
+	private String title;
+	@NotNull //(message = "picture shouldn't be empty")
+	private String picture;
+	
+	@ManyToMany
+	private List<User> participants;
+	@OneToOne
+	Cagnotte cagnotte;
 
 }

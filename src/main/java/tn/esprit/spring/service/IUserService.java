@@ -21,6 +21,7 @@ public interface IUserService {
 
 	User updateUser(User c);
 
+	User findUserByUserName(String userName) ;
 	User findUserByLogin ( String Login );
 	
     Boolean block(String angry, String blocked);

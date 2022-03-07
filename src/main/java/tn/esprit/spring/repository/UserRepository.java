@@ -19,9 +19,13 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	
 	User findByLogin(String Login) ;
-  List<User> findByexpertspeciality(ExpertSpec spec);
-	
+    User findByEmailIgnoreCase(String email);
 
+    
+    
+    
+	List<User> findByexpertspeciality(ExpertSpec spec);
+	
 
 
 }
