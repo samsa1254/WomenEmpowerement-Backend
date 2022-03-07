@@ -62,6 +62,33 @@ public class PublicationServiceImpl implements PublicationService {
 		return pubstendency;
 	}
 
+	@Override
+	public List<Publication> MostReacted() {
+		List<Publication> pubreact = new ArrayList<Publication>();
+		List<Long> pubids = PublicationRep.MostReacted();
+		for (Long item : pubids) {
+			Publication p =PublicationRep.findById(item).get();
+			pubreact.add(p);
+		}
+		return pubreact;
+	}
+
+	@Override
+	public List<String> reacts(Long idpublication) {
+		List<String> threevalues = new ArrayList<String>();
+		List<String> values = PublicationRep.reacts(idpublication);
+		
+			threevalues.add(0, values.get(0));
+			threevalues.add(1, values.get(1));
+			threevalues.add(2, values.get(2));
+		
+		
+		
+		return threevalues;
+	}
+	
+	
+
 	
 			
 
