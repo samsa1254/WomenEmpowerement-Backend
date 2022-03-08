@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,14 +30,16 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Api
 public class Cagnotte {
-	@Id 
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Long id ; 
-	private Double amount ; 
-	private String name ;
 	
-	@ManyToMany(mappedBy = "cagnottes")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idCagnotte;
+	private float amount;
+	
 	@JsonIgnore
-	private List<User> donors ; 
+	@OneToOne 
+	private Event event;
+	
+	
 
 }

@@ -39,6 +39,7 @@ public class CommentD {
 	private Date date ; 
 	
 	@OneToMany(cascade = CascadeType.ALL , mappedBy = "commentd")
+	@JsonIgnore
 	private List<ReactionC> reactionc ; 
 	
 	@ManyToOne

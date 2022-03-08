@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+
 import tn.esprit.spring.entities.User;
+
 import tn.esprit.spring.repository.UserRepository;
 
 
@@ -14,6 +16,7 @@ public class UserSecurity {
 	
 	@Autowired
 	UserRepository userRepo;
+
 
 	public boolean hasUserId(Authentication authentication, int userId) {
 		
@@ -39,6 +42,13 @@ public boolean hasUserIdd(Authentication authentication) {
 
 //		System.out.println(userId+"  "+userID);
             if(user.getIsEnabled()==true)
+
+	
+	public boolean hasUserId(Authentication authentication, int userId) {
+		
+		int userID=userRepo.findByLogin(authentication.getName()).getIduser();
+//		System.out.println(userId+"  "+userID);
+            if(userID==userId)
             	return true;
             
             return false;

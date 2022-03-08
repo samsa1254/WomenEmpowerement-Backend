@@ -39,6 +39,10 @@ public class OfferServiceImpl implements OfferService {
 		List<Offer> o = (List<Offer>) OR.findAll();
 		return o;
 	}
+	@Override
+	public List<Offer> GetOfferByName(String name) {	
+		return OR.getOfferbyName(name);
+	}
 
 
 }

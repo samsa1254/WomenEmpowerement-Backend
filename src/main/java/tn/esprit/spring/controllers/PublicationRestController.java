@@ -71,4 +71,29 @@ public class PublicationRestController {
 		Publication p = PubSer.updatePub(pub);
 		return p ; 
 	}
+	@GetMapping("/retrieve-pubtendency")
+	@ApiOperation(value = "recuperer les tendances pub  ")
+	@ResponseBody
+	public List<Publication> getPublicationtendency ( )
+	{
+		return PubSer.tendency();   
+	}
+	
+	@GetMapping("/retrieve-pubreact")
+	@ApiOperation(value = "recuperer les  pub reacted  ")
+	@ResponseBody
+	public List<Publication> getPublicationmostreact ( )
+	{
+		return PubSer.MostReacted();   
+	}
+	
+	
+	@GetMapping("/retrieve-3react/{idPublication}")
+	@ApiOperation(value = "recuperer les  3reacted  ")
+	@ResponseBody
+	public List<String> getPublication3react ( @PathVariable("idPublication") Long idPublication)
+	{
+		return PubSer.reacts(idPublication);  
+	}
+
 }

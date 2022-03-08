@@ -1,78 +1,155 @@
 package tn.esprit.spring.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.*;
+import org.springframework.mail.*;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+import java.io.ByteArrayInputStream;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
+import tn.esprit.spring.entities.Candidacy;
 import tn.esprit.spring.entities.Event;
-import tn.esprit.spring.service.EventService;
+import tn.esprit.spring.entities.User;
+import tn.esprit.spring.repository.EventRepository;
+import tn.esprit.spring.service.*;
+import utils.MessageResponse;
+import utils.PagingHeaders;
+import utils.PagingResponse;
+import io.swagger.annotations.Api;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.In;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.*;
+
+import lombok.extern.slf4j.Slf4j;
+import net.kaczmarzyk.spring.data.jpa.domain.Between;
+import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.multipart.MultipartFile;
+
+
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 
 
 @Api(tags = "Event Management")
-
 @RestController
 @RequestMapping("/Event")
 public class EventRestController {
 
 
 	@Autowired
-	 private EventService EventSer ;
+	EventService eventService;
+	@Autowired
+	EventRepository eventRepository;
 	
+	@Autowired
+	private JavaMailSender javaMailSender;
+
+	@PostMapping("/addEvent")
+	public ResponseEntity<Event> addEvent(@RequestBody Event event) {
+		eventService.addEvent(event);
+		return ResponseEntity.ok().body(event);
+	}	
 	
-	@GetMapping("/retrieve-all-events")
-	@ApiOperation(value = "Récupérer la liste des events ")
-	@ResponseBody
-	public List<Event> getEvents()
+	@PostMapping("/addParticipant/{id}")
+	 public ResponseEntity<MessageResponse> addParticipant(@PathVariable("id") Long id ,@RequestBody List<User> participants) {
+		return ResponseEntity.ok().body(eventService.addParticipant(id, participants));
+	}
+
+
+	@GetMapping("/getAllEvent")
+	public List<Event> getAllEvent()
 	{
-		List<Event> events = EventSer.getAllEvent();
-		return events;
+		List<Event> c = (List<Event>) eventRepository.findAll();
+		return c;
+	}
+	@GetMapping("/getEventById/{id}")
+	public ResponseEntity<Event> getEventById(@PathVariable("id") Long id) {
+		return ResponseEntity.status(HttpStatus.OK).body(eventService.getEventById(id));
+	}
+
+	@DeleteMapping("/deleteEvent/{id}")
+	public ResponseEntity<Void> deleteEvent(@PathVariable("id") Long id) {
+		eventService.deleteEvent(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@GetMapping("/retrieve-event/{id}")
-	@ApiOperation(value = "recuperer un event  ")
-	@ResponseBody
-	public Event getEvent (@PathVariable("id") Long id)
-	{
-		return EventSer.getEventById(id);   
-	}
 	
-	
-	@PostMapping("/add-event")
-	@ApiOperation(value = "ajouter un event ")
-	@ResponseBody 
-	public void addevent(@RequestBody Event event )
-	{
-		EventSer.addEvent(event);
+	@PostMapping("/send/{id}")
+	public void sendEmail(@PathVariable("id") Long id) throws MailException {
+
 		
+		Event e = eventService.getEventById(id);
+		List<User> users = e.getParticipants();
 		
+		for( User u: users)
+		{ 
+			
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(u.getEmail());
+		mail.setSubject("Testing Mail API");
+		mail.setText("Dear Client :"+u.getName()+" welcome in our event we wish that will donate for the womenempowerement !! ");
+
+		javaMailSender.send(mail);
+		}
 	}
 	
-	@DeleteMapping("/remove-event/{id}")
-	@ApiOperation(value = "supprimer un event ")
-	@ResponseBody
-	public void removeEvent(@PathVariable("id") Long id )
-	{
-		EventSer.deleteEvent(id);
+	@RequestMapping(value = "/pdfreport", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<InputStreamResource> citiesReport() throws IOException {
+
+		List<Event> evn = (List<Event>) eventRepository.findAll();
+
+		ByteArrayInputStream bis = utils.GeneratePdfReport.citiesReport(evn);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "inline; filename=citiesreport.pdf");
+
+	
+		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+				.body(new InputStreamResource(bis));
 	}
 	
-	@PutMapping("/modify-event")
-	@ApiOperation(value = "modifier un event ")
-	@ResponseBody
-	public void modifyevent(@RequestBody Event event)
-	{
-		EventSer.updateEvent(event);
-		 
-	}
+	
+
+	@Transactional
+    @GetMapping(value = "search", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Event>> get(
+    		@And({
+                    @Spec(path = "title", params = "title", spec = Like.class),
+                    @Spec(path = "type", params = "type", spec = Like.class),
+                    @Spec(path = "dateDebut", params = "DateDebut", spec = Equal.class),
+                    @Spec(path = "createDate", params = {"DateDebut", "dateFin"}, spec = Between.class)
+            }) Specification<Event> spec,
+            Sort sort,
+            @RequestHeader HttpHeaders headers) {
+        final PagingResponse response = eventService.get(spec, headers, sort);
+        return new ResponseEntity<>(response.getElements(), returnHttpHeaders(response), HttpStatus.OK);
+    }
+	
+	
+	public HttpHeaders returnHttpHeaders(PagingResponse response) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(PagingHeaders.COUNT.getName(), String.valueOf(response.getCount()));
+        headers.set(PagingHeaders.PAGE_SIZE.getName(), String.valueOf(response.getPageSize()));
+        headers.set(PagingHeaders.PAGE_OFFSET.getName(), String.valueOf(response.getPageOffset()));
+        headers.set(PagingHeaders.PAGE_NUMBER.getName(), String.valueOf(response.getPageNumber()));
+        headers.set(PagingHeaders.PAGE_TOTAL.getName(), String.valueOf(response.getPageTotal()));
+        return headers;
+    }
+
 }

@@ -37,8 +37,7 @@ public class Reaction {
 	@Enumerated(EnumType.STRING)
 	private ReactionValue value ; 
 	
-	@ManyToOne
-	private User user ;
+	
 	
 	@ManyToOne
 	private Publication publication ; 

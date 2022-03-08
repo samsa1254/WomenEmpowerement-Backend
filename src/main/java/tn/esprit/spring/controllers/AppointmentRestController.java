@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Appointment;
+import tn.esprit.spring.entities.Formation;
 import tn.esprit.spring.service.AppointmentService;
 
 
@@ -38,7 +39,7 @@ public class AppointmentRestController {
 	@GetMapping("/retrieve-app/{idAppointment}")
 	@ApiOperation(value = "recuperer un rendez-vous  ")
 	@ResponseBody
-	public Appointment getAppointment (@PathVariable("idAppointment") Long idApp)
+	public Appointment getAppointment (@PathVariable("idAppointment") int idApp)
 	{
 		return AppSer.retrievebyId(idApp);   
 	}
@@ -55,7 +56,7 @@ public class AppointmentRestController {
 	@DeleteMapping("/remove-app/{idAppointment}")
 	@ApiOperation(value = "supprimer un rendez-vous ")
 	@ResponseBody
-	public void removePub(@PathVariable("idAppointment") Long idapp )
+	public void removePub(@PathVariable("idAppointment") int idapp )
 	{
 		AppSer.deleteappById(idapp);
 	}
@@ -68,4 +69,38 @@ public class AppointmentRestController {
 		Appointment a = AppSer.updateAppointment(app);
 		return a ; 
 	}
+	
+	@PostMapping("/add-affectappointment/{idexpert}/{iduser})")
+	@ResponseBody
+	public void ajouterEtAffecterrendezvousauexpertetutilisteur( @RequestBody Appointment appointment ,@PathVariable("idexpert") int idexpert,@PathVariable("iduser") int iduser)
+	{
+		AppSer.AddandAffectAppointmentoexpertanduser(appointment, idexpert, iduser);
+	}
+	
+	
+	@GetMapping("/retrieve-userapp/{iduser}")
+	@ApiOperation(value = "recuperer les rendez-vous de l'utilisateur  ")
+	@ResponseBody
+	public List<Appointment> getuserAppointment (@PathVariable("iduser") int iduser)
+	{
+		return AppSer.getuserappointments(iduser);   
+	}
+	
+	@GetMapping("/retrieve-expertapp/{idexp}")
+	@ApiOperation(value = "recuperer les rendez-vous de l'expert  ")
+	@ResponseBody
+	public List<Appointment> getexpAppointment (@PathVariable("idexp") int idexp)
+	{
+		return AppSer.getexpertappointments(idexp);   
+	}
+	
+	@GetMapping("/retrieve-adminapp/{idadmin}")
+	@ApiOperation(value = "recuperer les rendez-vous de l'admin  ")
+	@ResponseBody
+	public List<Appointment> getadminAppointment (@PathVariable("idadmin") int idadmin)
+	{
+		return AppSer.getexpertappointments(idadmin);   
+	}
+	
+	
 }

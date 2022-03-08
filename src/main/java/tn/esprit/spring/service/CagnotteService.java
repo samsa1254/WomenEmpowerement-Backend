@@ -11,8 +11,8 @@ import tn.esprit.spring.entities.Cagnotte;
 public interface CagnotteService {
 
 	public void addCagnotte(Cagnotte cagnotte);
-	public void updateCagnotte (Cagnotte cagnotte);
 	List<Cagnotte> getAllCagnotte();
 	Cagnotte getCagnotteById(Long id);
 	void deleteCagnotte(Long id);
+   
 }
