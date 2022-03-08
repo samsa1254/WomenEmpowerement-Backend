@@ -79,6 +79,12 @@ public class UserServiceImpl implements IUserService {
 			c.setExpertadress(null);
 			c.setExpertnumber(null);
 			c.setExpertspeciality(null);
+<<<<<<< hamzaa
+=======
+			c.setSexe(Sexe.Women);
+			c.setIsEnabled(false);
+
+>>>>>>> local
 		}
 		
 		if (c.getRole().toString().equals("tutor"))
