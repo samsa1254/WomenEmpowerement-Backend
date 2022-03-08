@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import io.swagger.annotations.Api;
@@ -43,6 +44,7 @@ public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idEvent;
+	
 	@NotNull //(message = "date shouldn't be empty")
 	@DateTimeFormat(pattern = "dd/mm/yyyy")
 	private Date dateDebut;
@@ -58,8 +60,10 @@ public class Event {
 	@NotNull //(message = "picture shouldn't be empty")
 	private String picture;
 	
+	@JsonIgnore
 	@ManyToMany
 	private List<User> participants;
+	
 	@OneToOne
 	Cagnotte cagnotte;
 

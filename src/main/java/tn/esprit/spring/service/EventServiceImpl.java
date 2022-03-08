@@ -10,10 +10,14 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Cagnotte;
+import tn.esprit.spring.entities.Candidacy;
 import tn.esprit.spring.entities.Event;
+import tn.esprit.spring.entities.Offer;
 import tn.esprit.spring.entities.User;
+import tn.esprit.spring.mail.EmailControllers;
 import tn.esprit.spring.repository.CagnotteRepository;
 import tn.esprit.spring.repository.EventRepository;
+import tn.esprit.spring.repository.UserRepository;
 import utils.*;
 
 import org.springframework.data.domain.*;
@@ -40,8 +44,13 @@ public class EventServiceImpl  implements EventService{
 	CagnotteRepository cagnotteRepository;
 	@Autowired
 	CagnotteService cs;
+	@Autowired
+	private UserRepository UR;
+	@Autowired
+	EmailControllers EC;
 	
-	 @Override
+	/*
+	@Override
 	 public void addEvent(Event event) {
 		 
 		 Cagnotte cc=event.getCagnotte();
@@ -50,13 +59,14 @@ public class EventServiceImpl  implements EventService{
 		 event = eventRepository.save(event);
 		 
 		 
-		 }
+		 }*/
 	 
-	 @Override
-	 public Page<Event> getAllEvent(Pageable pageable) {
-	        return eventRepository.findAll(pageable);
-	    }
-
+	
+	@Override
+	 public void addEvent(Event event) {
+		 event = eventRepository.save(event);
+		 }
+	
 	  @Override
 	  public Event getEventById(Long id) {
 	        return eventRepository.findById(id).get();
@@ -90,6 +100,10 @@ public class EventServiceImpl  implements EventService{
 		    response.setError(false);
 		    return response;
 	   }
+	   
+	   
+	   
+	 		
 	   
 	   
 
@@ -166,6 +180,7 @@ public class EventServiceImpl  implements EventService{
 	        return eventRepository.findAll(spec, sort);
 	    }
 
-	   
+	    
+	  
 
 }

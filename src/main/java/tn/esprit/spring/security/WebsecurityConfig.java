@@ -43,7 +43,7 @@ public class WebsecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		
 				
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);		 
 		
 		auth
@@ -73,6 +73,12 @@ public class WebsecurityConfig extends WebSecurityConfigurerAdapter {
 	*/
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+	    http.cors().disable();
+		
+		http.headers().frameOptions().disable();
+		
+		http.csrf().disable();
 /*
 		http
      .httpBasic()
@@ -94,11 +100,7 @@ public class WebsecurityConfig extends WebSecurityConfigurerAdapter {
          .permitAll();
 		
 		
-		http.cors().disable();
-		
-		http.headers().frameOptions().disable();
-		
-		http.csrf().disable();
+	
 		
 		
 		

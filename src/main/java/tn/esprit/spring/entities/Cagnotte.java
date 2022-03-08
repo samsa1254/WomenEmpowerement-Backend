@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -34,6 +36,7 @@ public class Cagnotte {
 	private Long idCagnotte;
 	private float amount;
 	
+	@JsonIgnore
 	@OneToOne 
 	private Event event;
 	

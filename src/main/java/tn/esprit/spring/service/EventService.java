@@ -18,11 +18,9 @@ import tn.esprit.spring.entities.User;
 public interface EventService {
 
 	public void addEvent(Event event);
-	Page<Event> getAllEvent( Pageable pageable);
 	Event getEventById(Long id);
 	void deleteEvent(Long id);
 	public MessageResponse addParticipant(Long id , List<User> participants);
 	public PagingResponse get(Specification<Event> spec, HttpHeaders headers, Sort sort);
-
 
 }

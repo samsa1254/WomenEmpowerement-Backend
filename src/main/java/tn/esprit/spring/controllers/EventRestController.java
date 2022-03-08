@@ -22,6 +22,7 @@ import tn.esprit.spring.entities.Event;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.EventRepository;
 import tn.esprit.spring.service.*;
+import utils.MessageResponse;
 import utils.PagingHeaders;
 import utils.PagingResponse;
 import io.swagger.annotations.Api;
@@ -61,18 +62,14 @@ public class EventRestController {
 	@PostMapping("/addEvent")
 	public ResponseEntity<Event> addEvent(@RequestBody Event event) {
 		eventService.addEvent(event);
-		
 		return ResponseEntity.ok().body(event);
+	}	
+	
+	@PostMapping("/addParticipant/{id}")
+	 public ResponseEntity<MessageResponse> addParticipant(@PathVariable("id") Long id ,@RequestBody List<User> participants) {
+		return ResponseEntity.ok().body(eventService.addParticipant(id, participants));
 	}
 
-	/*@GetMapping("/getAllEvent")
-	public ResponseEntity<Page<Event>> getAllEvent(
-			@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-			@RequestParam(value = "size", defaultValue = "10", required = false) Integer size) {
-		Pageable pageable = PageRequest.of(page, size);
-		Page<Event> evn = eventService.getAllEvent(pageable);
-		return ResponseEntity.ok().body(evn);
-	}*/
 
 	@GetMapping("/getAllEvent")
 	public List<Event> getAllEvent()
@@ -90,26 +87,6 @@ public class EventRestController {
 		eventService.deleteEvent(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-/*
-	@GetMapping("/sort")
-	public ResponseEntity<Page<Event>> findEventByCriteria(
-			@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-			@RequestParam(value = "size", defaultValue = "10", required = false) Integer size,
-			@RequestParam( required = true) String param,
-			@RequestParam( required = true) Sort.Direction direction) {
-		Pageable pageable = !StringUtils.hasLength(param) ? PageRequest.of(page, size)
-				: PageRequest.of(page, size, direction, param);
-		Page<Event> evn = eventService.getAllEvent(pageable);
-		return ResponseEntity.ok().body(evn);
-	}
-	@GetMapping("/search/{title}")
-	public ResponseEntity<Page<Event>> findByTitle(@PathVariable("title") String title, @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
-			@RequestParam(value = "size", defaultValue = "10", required = false) Integer size){
-		Pageable pageable = PageRequest.of(page, size);
-		Page<Event> evn = eventService.findByTitle(title,pageable);	
-		return ResponseEntity.ok().body(evn);
-	}
-	*/
 	
 	
 	@PostMapping("/send/{id}")
