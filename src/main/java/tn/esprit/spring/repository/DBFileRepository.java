@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import tn.esprit.spring.entities.DBFile;
 
 @Repository
-public interface DBFileRepository  extends CrudRepository<DBFile, String>{
+public interface DBFileRepository  extends CrudRepository<DBFile, Long>{
 
 }
