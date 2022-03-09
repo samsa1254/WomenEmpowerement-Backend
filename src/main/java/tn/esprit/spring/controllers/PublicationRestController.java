@@ -76,9 +76,9 @@ public class PublicationRestController {
 	@GetMapping("/retrieve-pubtendency")
 	@ApiOperation(value = "recuperer les tendances pub  ")
 	@ResponseBody
-	public List<Publication> getPublicationtendency (@PathVariable("Date") LocalTime Date )
+	public List<Publication> getPublicationtendency ( )
 	{
-		return PubSer.tendency(Date);   
+		return PubSer.tendency();   
 	}
 	
 	@GetMapping("/retrieve-pubreact")

@@ -25,6 +25,8 @@ public class PublicationServiceImpl implements PublicationService {
 	private PublicationRepository PublicationRep ; 
 	@Autowired
 	private forbidenRepository forbidenRep ;
+	final public LocalTime time = LocalTime.now();
+	final public LocalDate date = LocalDate.now().minusDays(3);
 	@Override
 	public String addPub(Publication pub) {
 		String textbody= pub.getPost();
@@ -96,14 +98,18 @@ public class PublicationServiceImpl implements PublicationService {
 	}
 
 	@Override
-	public List<Publication> tendency(LocalTime date) {
-		LocalTime cnd = LocalTime.now().minusHours(72) ;
+	public List<Publication> tendency() {
+	
 		
 		List<Publication> pubstendency =  new ArrayList<Publication>();
-		List<Long> pubids = PublicationRep.Tendency(cnd);
+		List<Long> pubids = PublicationRep.Tendency();
 		for (Long item : pubids) {
 			Publication p= PublicationRep.findById(item).get();
-			pubstendency.add(p);
+		
+			if (( p.getDate().isAfter(date)) && (p.getTime().isBefore(time))  && ( pubstendency.size()<9))
+			{
+				pubstendency.add(p);
+			}
 			
 		}
 		
@@ -112,11 +118,17 @@ public class PublicationServiceImpl implements PublicationService {
 
 	@Override
 	public List<Publication> MostReacted() {
+
 		List<Publication> pubreact = new ArrayList<Publication>();
 		List<Long> pubids = PublicationRep.MostReacted();
 		for (Long item : pubids) {
 			Publication p =PublicationRep.findById(item).get();
-			pubreact.add(p);
+			if  (( p.getDate().isAfter(date)) && (p.getTime().isBefore(time))  && (pubreact.size()<9) )
+			{
+				pubreact.add(p);
+			}
+			
+			
 		}
 		return pubreact;
 	}
