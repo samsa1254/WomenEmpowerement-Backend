@@ -300,6 +300,30 @@ public class UserServiceImpl implements IUserService {
 		}
 		return false;
 	}
+
+
+
+
+
+
+	@Override
+	public void blockuseraccount(User u) {
+		if (u.getIsEnabled()==true) {
+           u.setIsEnabled(false);	
+           }	
+	}
+
+
+
+
+
+
+	@Override
+	public void unblockuseraccount(User u) {
+		if(u.getIsEnabled()==false) {
+         u.setIsEnabled(true);
+		}
+	}
 	
 	
 	

@@ -111,7 +111,16 @@
     <artifactId>spring-security-messaging</artifactId>
 </dependency>
 
+<!-- https://mvnrepository.com/artifact/com.twilio.sdk/twilio -->
+<dependency>
+    <groupId>com.twilio.sdk</groupId>
+    <artifactId>twilio</artifactId>
+    <version>7.1.0</version>
+</dependency>
+
 	</dependencies>
+	
+	
 
 	<build>
 		<plugins>
