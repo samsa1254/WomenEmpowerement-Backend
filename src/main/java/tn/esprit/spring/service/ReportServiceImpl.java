@@ -24,6 +24,8 @@ public class ReportServiceImpl implements ReportService {
 	private AppointmentRepository aRep ;
 	@Autowired
 	private DisponibiliteRepository disRep ;
+	@Autowired
+	private IUserService uSer ;
 	@Override
 	public Report addReport(Report rep) {
 		reportRep.save(rep);
@@ -55,14 +57,13 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	@Override
-	public Appointment treataReportbyMakingappointment(Long id ,int iduser1 , int iduser2,int user3,Appointment a) {
+	public Appointment treataReportbyMakingappointment(Long id , int iduser2,int user3,Appointment a) {
 	 boolean valide=false;
-
-	 User u1=uRep.findById(iduser1).get();
+	 Report r= reportRep.findById(id).get();
+	 User u1=uRep.findById(r.getUser().getIduser()).get();
 	 User u2=uRep.findById(iduser2).get();
 	 User u3=uRep.findById(user3).get();
-	 Report r= reportRep.findById(id).get();
-
+     
 	 
 	 
 	 List<Disponibilite> disps=u2.getDisponibilite();
@@ -101,6 +102,24 @@ public class ReportServiceImpl implements ReportService {
 	  
      
      return a;
+	}
+
+	@Override
+	public void treataReportbyblockinguser(Long id, int iduser) {
+      User u=uRep.findById(iduser).get();
+      Report r=reportRep.findById(id).get();
+      uSer.blockuseraccount(u);
+      r.setStatus("treated");
+      reportRep.save(r);
+      }
+
+	@Override
+	public void treataReportbyunblockinguser(Long id, int iduser) {
+		User u=uRep.findById(iduser).get();
+	      Report r=reportRep.findById(id).get();
+	      uSer.unblockuseraccount(u);;
+	      r.setStatus("treated");
+     	  reportRep.save(r);
 	}
 
 }

@@ -43,7 +43,7 @@ public class DBFileRestController {
 	
 	@GetMapping("/{id}")
 	@ResponseBody
-	public DBFile getFile ( @PathVariable String id )
+	public DBFile getFile ( @PathVariable Long id )
 	{
 		return DBFileSer.getFileById(id);
 	}
@@ -55,5 +55,12 @@ public class DBFileRestController {
 		return DBFileSer.getFileList();
 	}
 	
+	
+	@PostMapping("/Event/{idEvent}")
+	@ResponseBody
+	public DBFile uploadFileandaffectEevnt ( @RequestParam("file") MultipartFile file, @PathVariable("idEvent") Long idEvent1) throws IOException
+	{
+		return DBFileSer.storeandaffectEvent(file , idEvent1);
+	}
 	
 }

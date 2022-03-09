@@ -1,5 +1,6 @@
 package tn.esprit.spring.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Appointment;
 import tn.esprit.spring.entities.Formation;
+import tn.esprit.spring.entities.SMS;
+import tn.esprit.spring.entities.User;
+import tn.esprit.spring.mail.EmailControllers;
+import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.service.AppointmentService;
+import tn.esprit.spring.service.IUserService;
+import tn.esprit.spring.service.SmsService;
 
 
 @Api(tags = "Appointment Management")
@@ -26,6 +33,14 @@ import tn.esprit.spring.service.AppointmentService;
 public class AppointmentRestController {
     @Autowired
 	private AppointmentService AppSer ;
+    @Autowired
+    private SmsService sSer;
+    @Autowired
+    private IUserService uSer ;
+    @Autowired 
+    private UserRepository urep ;
+    @Autowired
+    private EmailControllers ec;
 	
 	@GetMapping("/retrieve-all-apps")
 	@ApiOperation(value = "Récupérer la liste des rendez-vous ")
@@ -70,10 +85,23 @@ public class AppointmentRestController {
 		return a ; 
 	}
 	
+	@SuppressWarnings("deprecation")
 	@PostMapping("/add-affectappointment/{idexpert}/{iduser})")
 	@ResponseBody
-	public void ajouterEtAffecterrendezvousauexpertetutilisteur( @RequestBody Appointment appointment ,@PathVariable("idexpert") int idexpert,@PathVariable("iduser") int iduser)
-	{
+	public void ajouterEtAffecterrendezvousauexpertetutilisteur( @RequestBody Appointment appointment ,@PathVariable("idexpert") int idexpert,@PathVariable("iduser") int iduser, SMS sms1,SMS sms2)
+	{   User u=urep.findById(iduser).get();
+	    User e=urep.findById(idexpert).get();
+	    System.out.println(appointment.getDateAppointment());
+	    appointment.getDateAppointment().setHours(appointment.getDateAppointment().getHours()-1);
+		sms1.setMessage("Mrs "+u.getName()+"\n"+"You have an appointment with Mr/Mrs"+" "+e.getName()+" at: "+appointment.getDateAppointment());
+	    sms1.setTo(u.getExpertnumber());
+	    System.out.println(u.getExpertnumber());
+	    sms2.setTo(e.getExpertnumber());
+	    sSer.send(sms1);
+	    sms2.setMessage("Mrs "+e.getName()+"\n"+"You have an appointment with Mr/Mrs"+" "+u.getName()+" at: "+appointment.getDateAppointment());
+		sSer.send(sms2);
+		ec.AppointmentMail(u.getEmail(), u, e, appointment);
+		 appointment.getDateAppointment().setHours(appointment.getDateAppointment().getHours()+1);
 		AppSer.AddandAffectAppointmentoexpertanduser(appointment, idexpert, iduser);
 	}
 	

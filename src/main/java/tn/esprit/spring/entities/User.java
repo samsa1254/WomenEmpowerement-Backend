@@ -158,10 +158,7 @@ public class User implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Publication> publications ;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "host")
-	private List<Event> events2 ;
+
 	
 
 	@JsonIgnore

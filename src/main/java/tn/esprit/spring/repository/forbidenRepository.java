@@ -3,9 +3,9 @@ package tn.esprit.spring.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import tn.esprit.spring.entities.DBFile;
+import tn.esprit.spring.entities.forbiden;
 
 @Repository
-public interface DBFileRepository  extends CrudRepository<DBFile, Long>{
+public interface forbidenRepository extends CrudRepository<forbiden, Long> {
 
 }

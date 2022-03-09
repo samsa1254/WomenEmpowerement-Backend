@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.springframework.lang.Nullable;
 
@@ -26,8 +27,8 @@ import lombok.Setter;
 @Api
 public class DBFile {
 	@Id
-	@Column(length = 500)
-	private String id ; 
+	
+	private Long id ; 
 	private String name ; 
 	private String type ; 
 	@Lob
@@ -38,11 +39,15 @@ public class DBFile {
 	@Nullable
 	private Publication publication ;
 	
-	public DBFile( String id , String name , String type , byte[] data )
+	
+	
+	public DBFile( Long id , String name , String type , byte[] data )
 	{
 		this.id = id ; 
 		this.name = name ; 
 		this.type = type ; 
 		this.data =data ;
 	}
+	
+	
 }

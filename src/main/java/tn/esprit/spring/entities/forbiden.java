@@ -1,15 +1,11 @@
 package tn.esprit.spring.entities;
 
-
-
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,13 +25,11 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Api
-public class Cagnotte {
+public class forbiden {
+	@Id 
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	private Long id ;
+	private String text ;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idCagnotte;
-	private float amount;
-	
-
 
 }
