@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import java.io.ByteArrayInputStream;
 
+import tn.esprit.spring.entities.Cagnotte;
 import tn.esprit.spring.entities.Candidacy;
 import tn.esprit.spring.entities.Event;
 import tn.esprit.spring.entities.User;
@@ -60,9 +61,10 @@ public class EventRestController {
 	private JavaMailSender javaMailSender;
 
 	@PostMapping("/addEvent")
-	public ResponseEntity<Event> addEvent(@RequestBody Event event) {
-		eventService.addEvent(event);
-		return ResponseEntity.ok().body(event);
+	@ResponseBody
+	public Event addEvent(@RequestBody Event event,@RequestBody Cagnotte cagnotte) {
+		eventService.addEvent(event,cagnotte);
+		return event;
 	}	
 	
 	@PostMapping("/addParticipant/{id}")

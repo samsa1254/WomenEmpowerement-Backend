@@ -36,9 +36,6 @@ public class Cagnotte {
 	private Long idCagnotte;
 	private float amount;
 	
-	@JsonIgnore
-	@OneToOne 
-	private Event event;
 	
 	
 

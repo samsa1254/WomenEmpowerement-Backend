@@ -18,10 +18,12 @@ public class CagnotteServiceImpl implements CagnotteService{
 	 @Autowired
 	 private UserRepository  userRepository;
 	 
+	 
 	 @Override
 	 public void addCagnotte(Cagnotte cagnotte) {
 		 cagnotteRepository.save(cagnotte);
 	 }
+	 
 	 
 	 @Override
 	 	public List<Cagnotte> getAllCagnotte() {

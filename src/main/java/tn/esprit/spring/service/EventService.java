@@ -11,13 +11,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import utils.MessageResponse;
 import utils.PagingResponse;
+import tn.esprit.spring.entities.Cagnotte;
 import tn.esprit.spring.entities.Event;
 import tn.esprit.spring.entities.User;
 
 @Service
 public interface EventService {
 
-	public void addEvent(Event event);
+	public void addEvent(Event event,Cagnotte cagnotte);
 	Event getEventById(Long id);
 	void deleteEvent(Long id);
 	public MessageResponse addParticipant(Long id , List<User> participants);

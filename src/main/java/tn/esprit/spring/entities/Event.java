@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
@@ -56,9 +57,14 @@ public class Event {
 	@NotNull //(message = "description shouldn't be empty")
 	private String description;
 	@NotNull //(message = "title shouldn't be empty")
-	private String title;
-	@NotNull //(message = "picture shouldn't be empty")
-	private String picture;
+	
+private String title;
+
+    
+	@OneToOne
+	@JsonIgnore
+	@Nullable
+	private DBFile picture;
 	
 	@JsonIgnore
 	@ManyToMany
@@ -66,5 +72,9 @@ public class Event {
 	
 	@OneToOne
 	Cagnotte cagnotte;
+	
+	
+	
+	
 
 }

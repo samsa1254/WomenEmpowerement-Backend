@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.spring.entities.DBFile;
+import tn.esprit.spring.entities.Event;
 import tn.esprit.spring.repository.DBFileRepository;
+import tn.esprit.spring.repository.EventRepository;
 import tn.esprit.spring.repository.PublicationRepository;
 
 @Service
@@ -19,7 +21,8 @@ public class DBFileServiceImpl implements DBFileService {
 	private DBFileRepository DBFileRep ;
 	@Autowired
 	private PublicationRepository PubRep ;
-
+	@Autowired
+	private EventRepository EventRep;
 	
 
 	
@@ -64,7 +67,26 @@ public class DBFileServiceImpl implements DBFileService {
 	DBFile d =	DBFileRep.findById(id).get();
 		return d;
 	}
-	
+
+	@Override
+	public DBFile storeandaffectEvent ( MultipartFile file , Long idEvent1 ) throws IOException{
+		String fileName = file.getOriginalFilename();
+		DBFile dbFile = new DBFile(UUID.randomUUID().getLeastSignificantBits(), fileName, file.getContentType(), file.getBytes());
+		DBFileRep.save(dbFile);
+
+		
+    	Event event = EventRep.findById(idEvent1).get();
+		System.out.println(event);
+		event.setPicture(dbFile);
+		EventRep.save(event);
+            
+			
+
+		return  dbFile;
+		
+	}
+
+
 	
 
 }

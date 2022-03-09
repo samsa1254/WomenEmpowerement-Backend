@@ -13,4 +13,6 @@ public interface DBFileService {
 	public List<DBFile> store (List<MultipartFile> files ) throws IOException ;
 	public DBFile getFileById( Long id ) ;
 	public List<DBFile> getFileList();
+	public DBFile storeandaffectEvent ( MultipartFile file , Long idEvent ) throws IOException;
+
 }

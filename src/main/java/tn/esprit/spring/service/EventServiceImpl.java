@@ -49,24 +49,22 @@ public class EventServiceImpl  implements EventService{
 	@Autowired
 	EmailControllers EC;
 	
-	/*
+	
 	@Override
-	 public void addEvent(Event event) {
+	 public void addEvent(Event event,Cagnotte cagnotte) {
 		 
-		 Cagnotte cc=event.getCagnotte();
-		 cc.setEvent(event);
-		 cs.addCagnotte(cc);		 
+		 cagnotteRepository.save(cagnotte);
+		 event.setCagnotte(cagnotte);
 		 event = eventRepository.save(event);
 		 
-		 
-		 }*/
+		 }
 	 
-	
+/*	
 	@Override
 	 public void addEvent(Event event) {
 		 event = eventRepository.save(event);
 		 }
-	
+	*/
 	  @Override
 	  public Event getEventById(Long id) {
 	        return eventRepository.findById(id).get();

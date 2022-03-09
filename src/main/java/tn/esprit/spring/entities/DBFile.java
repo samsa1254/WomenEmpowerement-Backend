@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.springframework.lang.Nullable;
 
@@ -38,6 +39,8 @@ public class DBFile {
 	@Nullable
 	private Publication publication ;
 	
+	
+	
 	public DBFile( Long id , String name , String type , byte[] data )
 	{
 		this.id = id ; 
@@ -45,4 +48,6 @@ public class DBFile {
 		this.type = type ; 
 		this.data =data ;
 	}
+	
+	
 }
