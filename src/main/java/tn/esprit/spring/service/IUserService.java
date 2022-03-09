@@ -21,6 +21,7 @@ public interface IUserService {
 
 	User updateUser(User c);
 
+	User findUserByUserName(String userName) ;
 	User findUserByLogin ( String Login );
 	
     Boolean block(String angry, String blocked);
@@ -30,6 +31,15 @@ public interface IUserService {
 	Boolean blockControl(String angry, String blocked);
 
 	List<User> listeDeUserParexpertspeciality(ExpertSpec spec);
+	
+	public void deleteUselessAcounts();
+	
+	
+	
+	
+	
+	void blockuseraccount(User u);
+	void unblockuseraccount(User u);
 	
 	
 

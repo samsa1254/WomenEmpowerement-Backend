@@ -2,7 +2,15 @@ package tn.esprit.spring.controllers;
 
 import java.util.List;
 
+import com.stripe.exception.AuthenticationException;
+import com.stripe.exception.CardException;
+import com.stripe.exception.InvalidRequestException;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
+import com.stripe.model.PaymentIntent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +26,7 @@ import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Cagnotte;
 
 import tn.esprit.spring.service.CagnotteService;
+import tn.esprit.spring.service.StripeService;
 
 @Api(tags = "Cagnotte Management")
 
@@ -25,51 +34,84 @@ import tn.esprit.spring.service.CagnotteService;
 @RequestMapping("/Cagnotte")
 
 public class CagnotteRestController {
+
 	@Autowired
-	private CagnotteService CagnotteSer ;
-	
-	@GetMapping("/retrieve-all-cagnottes")
-	@ApiOperation(value = "Récupérer la liste des cagnottes ")
-	@ResponseBody
-	public List<Cagnotte> getCagnottes()
-	{
-		List<Cagnotte> cagnottes = CagnotteSer.getAllCagnotte();
-		return cagnottes;
-	}
-	
-	@GetMapping("/retrieve-cagnotte/{id}")
-	@ApiOperation(value = "recuperer un cagnotte  ")
-	@ResponseBody
-	public Cagnotte getCagnotte (@PathVariable("id") Long id)
-	{
-		return CagnotteSer.getCagnotteById(id);   
-	}
-	
-	@PostMapping("/add-cagnotte")
-	@ApiOperation(value = "ajouter un cagnotte ")
-	@ResponseBody 
-	public void addCagnotte(@RequestBody Cagnotte cagnotte )
-	{
-		CagnotteSer.addCagnotte(cagnotte);
+	private CagnotteService cagnotteService;
+
+	@Autowired
+	private StripeService stripeService;
+
+	@PutMapping("/addCagnotte")
+    public ResponseEntity<Cagnotte> addCagnotte(@RequestBody Cagnotte cagnotte) {
+		cagnotteService.addCagnotte(cagnotte);
 		
 		
-	}
+		return ResponseEntity.ok().body(cagnotte);
+    }
 	
-	@DeleteMapping("/remove-cagnotte/{id}")
-	@ApiOperation(value = "supprimer un cagnotte ")
-	@ResponseBody
-	public void removeCagnotte(@PathVariable("id") Long id )
-	{
-		CagnotteSer.deleteCagnotte(id);
-	}
 	
-	@PutMapping("/modify-cagnotte")
-	@ApiOperation(value = "modifier un cagnotte ")
+	@GetMapping("/getAllCagnotte")
+    public ResponseEntity<List<Cagnotte>> getAllCagnotte() {
+		List<Cagnotte> cag= cagnotteService.getAllCagnotte();
+		return ResponseEntity.ok().body(cag);
+		
+    }
+	
+	 @GetMapping("/getCagnotteById/{id}")
+	    public ResponseEntity<Cagnotte> getCagnotteById(@PathVariable("id") Long id) {
+		 return ResponseEntity.status(HttpStatus.OK).body(cagnotteService.getCagnotteById(id));
+	    }
+	 
+	 @DeleteMapping("/deleteCagnotte/{id}")
+	    public  ResponseEntity<Void> deleteCagnotte(@PathVariable("id") Long id) {
+		 	cagnotteService.deleteCagnotte(id);
+		 	 return new ResponseEntity<>(HttpStatus.OK);
+	    }
+
+	    /*------------------------------Payment API--------------------------*/
+
+	//http://localhost:8089/SpringMVC/Cagnotte/customer/
+	@PostMapping("/customer/{idUser}")
 	@ResponseBody
-	public void modifyCagnotte(@RequestBody Cagnotte cagnotte)
-	{
-		CagnotteSer.updateCagnotte(cagnotte);
-		 
+	public String createCustomer(@PathVariable("idUser") int idUser) {
+		return stripeService.createStripeCustomer(idUser);
 	}
 
+	// http://localhost:8089/SpringMVC/Cagnotte/customer/customer_id_from_stripeApi_acount/4242424242424242/11/2026/123
+	@PostMapping("/customer/{customerId}/{carta}/{expMonth}/{expYear}/{cvc}")
+	@ResponseBody
+	public String createCustumorStripe(@PathVariable("customerId") String customerId, @PathVariable("carta") String carta,
+								 @PathVariable("expMonth") String expMonth, @PathVariable("expYear") String expYear,
+								 @PathVariable("cvc") String cvc) throws StripeException {
+		return stripeService.createCustumorStripe(customerId, carta, expMonth, expYear, cvc);
+	}
+
+	// http://localhost:8089/SpringMVC/Cagnotte/paymentintent
+	/*
+	 * { "description":"test la methode payment", "amount":"10000",
+	 * "currency":"EUR" }
+	 */
+	@PostMapping("/paymentintent")
+	public String payment(@RequestBody Charge chargeRequest) throws StripeException {
+		return stripeService.paymentIntent(chargeRequest);
+
+	}
+
+	// http://localhost:8089/SpringMVC/Cagnotte/confirm/{id}
+	@PostMapping("/confirm/{id}")
+	public ResponseEntity<String> confirm(@PathVariable("id") String id) throws StripeException {
+		PaymentIntent paymentIntent = stripeService.confirm(id);
+		String paymentStr = paymentIntent.toJson();
+		return new ResponseEntity<>(paymentStr, HttpStatus.OK);
+	}
+
+	//////              1/4242424242424242/11/2026/123
+	@PostMapping("/pay/{idc}/{carta}/{expMonth}/{expYear}/{cvc}/{userAmount}")
+	public void Pay(@PathVariable("idc") int idc, @PathVariable("carta") String carta,
+					@PathVariable("expMonth") int expMonth, @PathVariable("expYear") int expYear,
+					@PathVariable("cvc") String cvc,@PathVariable("userAmount") float userAmount) throws StripeException{
+		stripeService.Pay(idc,carta,expMonth,expYear,cvc,userAmount);
+	}
+
+		/*--------------------------------------------------------*/
 }

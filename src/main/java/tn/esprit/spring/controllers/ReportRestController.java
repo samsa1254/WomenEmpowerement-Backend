@@ -17,7 +17,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Appointment;
 import tn.esprit.spring.entities.Report;
+import tn.esprit.spring.entities.SMS;
+import tn.esprit.spring.entities.User;
+import tn.esprit.spring.repository.ReportRepository;
+import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.service.ReportService;
+import tn.esprit.spring.service.SmsService;
 
 @Api(tags = "Report Management")
 @RestController
@@ -26,6 +31,12 @@ public class ReportRestController {
 
 	@Autowired
 	 private ReportService repSer ;
+	@Autowired
+	 private UserRepository urep ;
+	@Autowired
+	 private SmsService sSer;
+	@Autowired
+	 private ReportRepository rRep;
 	
 	@GetMapping("/retrieve-all-reps")
 	@ApiOperation(value = "Récupérer la liste des Reports ")
@@ -70,11 +81,42 @@ public class ReportRestController {
 		return r ; 
 	}
 	
-	@PostMapping("/treatreport-bymakingappointment/{reportid}/{iduser1}/{iduser2}/{iduser3}")
+	@SuppressWarnings("deprecation")
+	@PostMapping("/treatreport-bymakingappointment/{reportid}/{iduser2}/{iduser3}")
 	@ResponseBody
-	public void ajouterEtAffceterFormationaFormateur( @RequestBody Appointment appointment ,@PathVariable("iduser1") int iduser1,@PathVariable("iduser2") int iduser2,@PathVariable("iduser3") int iduser3,@PathVariable("reportid") Long idreport)
-	{
-		repSer.treataReportbyMakingappointment(idreport, iduser1, iduser2,iduser3,appointment);
+	public void ajouterEtAffceterFormationaFormateur( @RequestBody Appointment appointment ,@PathVariable("iduser2") int iduser2,@PathVariable("iduser3") int iduser3,@PathVariable("reportid") Long idreport, SMS sms1,SMS sms2,SMS sms3)
+	{  Report r=rRep.findById(idreport).get();
+		User u=urep.findById(r.getUser().getIduser()).get();
+        User e=urep.findById(iduser2).get();
+        User a=urep.findById(iduser3).get();
+    System.out.println(appointment.getDateAppointment());
+    appointment.getDateAppointment().setHours(appointment.getDateAppointment().getHours()-1);
+	sms1.setMessage("Mrs "+u.getName()+"\n"+"You have an appointment with Mr/Mrs"+" "+e.getName()+" and "+a.getName()+" at: "+appointment.getDateAppointment());
+    sms1.setTo(u.getExpertnumber());
+    System.out.println(u.getExpertnumber());
+    sms2.setTo(e.getExpertnumber());
+    sms3.setTo(a.getExpertnumber());
+    sSer.send(sms1);
+    sms2.setMessage("Mrs "+e.getName()+"\n"+"You have an appointment with Mr/Mrs"+" "+u.getName()+" and "+a.getName()+" at: "+appointment.getDateAppointment());
+	sSer.send(sms2);
+	sms3.setMessage("Mrs "+a.getName()+"\n"+"You have an appointment with Mr/Mrs"+" "+u.getName()+" and "+e.getName()+" at: "+appointment.getDateAppointment());
+	sSer.send(sms3);
+	 appointment.getDateAppointment().setHours(appointment.getDateAppointment().getHours()+1);
+		repSer.treataReportbyMakingappointment(idreport,iduser2,iduser3,appointment);
+	}
+	
+	@PostMapping("/treatreport-byblockinguser/{idreport}/{iduser}")
+	@ResponseBody
+	public void treatreportbyblockinguser( @PathVariable("idreport") Long idreport,@PathVariable("iduser") int iduser)
+	{   
+		repSer.treataReportbyblockinguser(idreport, iduser);
+	}
+	
+	@PostMapping("/treatreport-byunblockinguser/{idreport}/{iduser}")
+	@ResponseBody
+	public void treatreportbyunblockinguser( @PathVariable("idreport") Long idreport,@PathVariable("iduser") int iduser)
+	{   
+		repSer.treataReportbyunblockinguser(idreport, iduser);
 	}
 
 }

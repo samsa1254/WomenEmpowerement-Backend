@@ -1,10 +1,15 @@
 package tn.esprit.spring.mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+
+import tn.esprit.spring.entities.Appointment;
+import tn.esprit.spring.entities.User;
 @RestController
 public class EmailControllers {
 	
@@ -49,7 +54,32 @@ public class EmailControllers {
 		 
 		    return "Successfully sent";
 	  }
+	  
+	  
+	  public String AffectationEvent(String Mail ,String name  )
+	  {
+		   
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom("Slavdorn4@gmail.com");
+			message.setTo(Mail);
+			message.setText("Dear Client :"+name+" welcome in our event we wish that will donate for the womenempowerement !! ");
+			message.setSubject("Woman Empowerement Mailing Bot");
+			mailSender.send(message);
+		 
+		    return "Successfully sent";
+	  }
 
+	  public String AppointmentMail(String Email , User user1 , User user2,Appointment a)
+	  {
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom("womenempowermentesprit@gmail.com");
+			message.setTo(Email);
+			message.setText("Mr/Mrs "+user1.getName()+" you have an appointment with Mr/Mrs "+user2.getName()+" at: "+a.getDateAppointment());
+			message.setSubject("Woman Empowerement Mailing Bot");
+			mailSender.send(message);
+		 
+		    return "Successfully sent";
+	  }
 
 
 }

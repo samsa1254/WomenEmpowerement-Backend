@@ -7,40 +7,40 @@ import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Cagnotte;
 import tn.esprit.spring.repository.CagnotteRepository;
+import tn.esprit.spring.repository.UserRepository;
 
 @Service
 public class CagnotteServiceImpl implements CagnotteService{
 
-	@Autowired
-	CagnotteRepository CagnotteRep ;
-	@Override
-	public void addCagnotte(Cagnotte cagnotte) {
-		CagnotteRep.save(cagnotte);
-		
-	}
+	 @Autowired
+	 private CagnotteRepository cagnotteRepository;
+	 
+	 @Autowired
+	 private UserRepository  userRepository;
+	 
+	 
+	 @Override
+	 public void addCagnotte(Cagnotte cagnotte) {
+		 cagnotteRepository.save(cagnotte);
+	 }
+	 
+	 
+	 @Override
+	 	public List<Cagnotte> getAllCagnotte() {
+	        return cagnotteRepository.findAll();
+	    }
 
-	@Override
-	public void updateCagnotte(Cagnotte cagnotte) {
-		CagnotteRep.save(cagnotte);
-		
-	}
+	    @Override
+	    public Cagnotte getCagnotteById(Long id) {
+	        return cagnotteRepository.findById(id).get();
+	    }
 
-	@Override
-	public List<Cagnotte> getAllCagnotte() {
-		List<Cagnotte> cagnottes = (List<Cagnotte>) CagnotteRep.findAll();
-		return cagnottes;
-	}
-
-	@Override
-	public Cagnotte getCagnotteById(Long id) {
-		Cagnotte c = CagnotteRep.findById(id).get();
-		return c ;
-	}
-
-	@Override
-	public void deleteCagnotte(Long id) {
-		CagnotteRep.deleteById(id);
-		
-	}
+	    @Override
+	    public void deleteCagnotte(Long id){
+	    	cagnotteRepository.deleteById(id);
+	    }
+	    
+// commit 
+	
 
 }
