@@ -1,8 +1,9 @@
 package tn.esprit.spring.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
-
-
+import java.util.Date;
 import java.util.List;
 
 
@@ -11,24 +12,69 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import tn.esprit.spring.entities.Publication;
+import tn.esprit.spring.entities.forbiden;
 import tn.esprit.spring.repository.PublicationRepository;
+import tn.esprit.spring.repository.forbidenRepository;
 
 @Service
 public class PublicationServiceImpl implements PublicationService {
 
 	@Autowired
 	private PublicationRepository PublicationRep ; 
+	@Autowired
+	private forbidenRepository forbidenRep ;
 	@Override
-	public Publication addPub(Publication pub) {
-		PublicationRep.save(pub);
-		return pub;
+	public String addPub(Publication pub) {
+		String textbody= pub.getPost();
+		List<forbiden> badwordlist = (List<forbiden>) forbidenRep.findAll();
+		int compteur=0;
+		for(int i=0 ; i<badwordlist.size(); i++)
+		{
+			if (textbody.contains(badwordlist.get(i).getText()))
+			{
+				compteur++; 
+			}
+		}
+		if (compteur>0)
+		{
+			return "your post contains "+compteur+" bad words";
+			
+		}
+		else	
+				{
+			
+			 PublicationRep.save(pub);
+			 return "Post added successfuly " ;
+				}
 	}
+		
+	
 
 	@Override
-	public Publication updatePub(Publication pub) {
-		PublicationRep.save(pub);
-		return pub;
+	public String  updatePub(Publication pub) {
+		String textbody= pub.getPost();
+		List<forbiden> badwordlist = (List<forbiden>) forbidenRep.findAll();
+		int compteur=0;
+		for(int i=0 ; i<badwordlist.size(); i++)
+		{
+			if (textbody.contains(badwordlist.get(i).getText()))
+			{
+				compteur++; 
+			}
+		}
+		if (compteur>0)
+		{
+			return "your post contains "+compteur+" bad words";
+			
+		}
+		else	
+				{
+			
+			 PublicationRep.save(pub);
+			 return "Post added successfuly " ;
+				}
 	}
 
 	@Override
@@ -50,9 +96,11 @@ public class PublicationServiceImpl implements PublicationService {
 	}
 
 	@Override
-	public List<Publication> tendency() {
+	public List<Publication> tendency(LocalTime date) {
+		LocalTime cnd = LocalTime.now().minusHours(72) ;
+		
 		List<Publication> pubstendency =  new ArrayList<Publication>();
-		List<Long> pubids = PublicationRep.Tendency();
+		List<Long> pubids = PublicationRep.Tendency(cnd);
 		for (Long item : pubids) {
 			Publication p= PublicationRep.findById(item).get();
 			pubstendency.add(p);
@@ -86,6 +134,7 @@ public class PublicationServiceImpl implements PublicationService {
 		
 		return threevalues;
 	}
+
 	
 	
 

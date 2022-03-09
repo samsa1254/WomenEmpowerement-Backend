@@ -1,5 +1,7 @@
 package tn.esprit.spring.controllers;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +51,10 @@ public class PublicationRestController {
 	@PostMapping("/add-pub")
 	@ApiOperation(value = "ajouter un pub ")
 	@ResponseBody 
-	public Publication addPublication(@RequestBody Publication pub )
+	public String addPublication(@RequestBody Publication pub )
 	{
-		Publication p= PubSer.addPub(pub);
-		return p ; 
+	return  PubSer.addPub(pub);
+		
 		
 	}
 	@DeleteMapping("/remove-pub/{idPublication}")
@@ -66,17 +68,17 @@ public class PublicationRestController {
 	@PutMapping("/modify-pub")
 	@ApiOperation(value = "modifier un pub ")
 	@ResponseBody
-	public Publication modifyPublication(@RequestBody Publication pub)
+	public String modifyPublication(@RequestBody Publication pub)
 	{
-		Publication p = PubSer.updatePub(pub);
-		return p ; 
+		 return  PubSer.updatePub(pub);
+		 
 	}
 	@GetMapping("/retrieve-pubtendency")
 	@ApiOperation(value = "recuperer les tendances pub  ")
 	@ResponseBody
-	public List<Publication> getPublicationtendency ( )
+	public List<Publication> getPublicationtendency (@PathVariable("Date") LocalTime Date )
 	{
-		return PubSer.tendency();   
+		return PubSer.tendency(Date);   
 	}
 	
 	@GetMapping("/retrieve-pubreact")
@@ -96,4 +98,6 @@ public class PublicationRestController {
 		return PubSer.reacts(idPublication);  
 	}
 
+	
+	
 }
