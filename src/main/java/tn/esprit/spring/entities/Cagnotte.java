@@ -36,7 +36,6 @@ public class Cagnotte {
 	private Long idCagnotte;
 	private float amount;
 	
-	
-	
+
 
 }

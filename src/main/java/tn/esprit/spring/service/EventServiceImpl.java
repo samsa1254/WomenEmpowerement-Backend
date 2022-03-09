@@ -51,11 +51,10 @@ public class EventServiceImpl  implements EventService{
 	
 	
 	@Override
-	 public void addEvent(Event event,Cagnotte cagnotte) {
-		 
-		 cagnotteRepository.save(cagnotte);
-		 event.setCagnotte(cagnotte);
+	 public void addEvent(Event event) {
+		 		 
 		 event = eventRepository.save(event);
+		 
 		 
 		 }
 	 
