@@ -32,7 +32,7 @@ public interface IUserService {
 
 	List<User> listeDeUserParexpertspeciality(ExpertSpec spec);
 	
-	
+	public void deleteUselessAcounts();
 
 	
 }

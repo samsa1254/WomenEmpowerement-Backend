@@ -6,6 +6,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,6 +77,16 @@ public class UserController {
 		} 
 		else
 		{User User = UserService.addUser(c);
+		
+		if (c.getRole().toString().equals("Admin")||c.getRole().toString().equals("tutor")||c.getRole().toString().equals("expert"))
+		{ SimpleMailMessage mailMessage = new SimpleMailMessage();
+	     mailMessage.setTo(User.getEmail());
+	     mailMessage.setSubject("NEW MEMBERSHIP !");
+	     mailMessage.setFrom("womenempowermentesprit@gmail.com");
+	     mailMessage.setText("WELCOME ! \n YOU ARE NOW A NEW MEMBER IN WOMEN EMPOWERMENET \n ");
+
+	     emailSenderService.sendEmail(mailMessage);}
+		
 	return User;}
 	}
 
@@ -92,6 +103,18 @@ public class UserController {
 	public User modifyUser(@RequestBody User User) {
 	return UserService.updateUser(User);
 	}
+	
+	
+	@DeleteMapping("/Delete-Useless-User/")
+	@ResponseBody
+	public void deleteUselessUser() {
+		UserService.deleteUselessAcounts ();
+	}
+	
+	
+	
+	
+	
 	
 
 	@GetMapping("/blockUser")
@@ -125,6 +148,8 @@ public class UserController {
 	@PostMapping("/register")
 	public String Register ( @RequestBody User user) { 
 	String msg="";
+
+	user.setIsEnabled(false);
 	User userExists = UserService.findUserByUserName(user.getLogin());
 	if (userExists != null ) {
 	msg="There is already a user registered with the user name provided";
@@ -132,6 +157,7 @@ public class UserController {
 	if (!user.getRole().toString().equals("women"))
 			{msg = "cette rebrique est consacré que pour les femmes";}
 	else {
+		
 		UserService.addUser(user);
 	msg="OK";
 	
@@ -152,6 +178,26 @@ public class UserController {
 	}
 	return msg; }
 
+	
+	@RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+	
+	public void confirmUserAccount(@RequestParam("token")String confirmationToken) {
+		 
+        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+
+		if(token != null)
+	        {
+	            User user = UserService.findUserByUserName(token.getUser().getLogin());
+	            user.setIsEnabled(true);
+	            UserService.updateUser(user);
+	            System.out.println("Votre Compte est activee avec succees ");
+	        }
+		
+	}
+	    
+
+
+	
 	@PostMapping("/passwordreset/{login}")
 	public String passwordreset (@PathVariable("login") String login) { 
 	String msg="";
@@ -176,30 +222,12 @@ public class UserController {
      mailMessage.setTo(user.getEmail());
      mailMessage.setSubject("PASSWORD RESET !");
      mailMessage.setFrom("womenempowermentesprit@gmail.com");
-     mailMessage.setText(generatedString);
+     mailMessage.setText("YOUR NEW PASSWORD IS : "+generatedString);
 
      emailSenderService.sendEmail(mailMessage);
 	
 	return msg; }
 
-	
-	@RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
-	
-	public void confirmUserAccount(@RequestParam("token")String confirmationToken) {
-		 
-        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-
-		if(token != null)
-	        {
-	            User user = UserService.findUserByUserName(token.getUser().getLogin());
-	            user.setIsEnabled(true);
-	            UserService.updateUser(user);
-	            System.out.println("Votre Compte est activee avec succees ");
-	        }
-		
-	}
-	    
-	 
 	    
 	}
 
