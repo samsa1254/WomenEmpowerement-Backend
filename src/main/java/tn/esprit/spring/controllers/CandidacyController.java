@@ -73,7 +73,7 @@ public class CandidacyController {
 		return CS.ApproveCandid(id, s); 
 	}
 	
-	@GetMapping("/GetCandidbyOffer/{id}/{name}")
+	@GetMapping("/GetCandidbyOffer/{id}")
 	@ResponseBody
 	public List<Candidacy> GetCandidByOffer (@PathVariable("id") Long id)
 	{
@@ -85,6 +85,13 @@ public class CandidacyController {
 	public List<Candidacy> GetCandidbyState (@PathVariable("name") String name ,@PathVariable("state") String state)
 	{
 		return CS.FilterByState(name , state);   
+	}
+	
+	@GetMapping("/GetCandidbyuser/{id}")
+	@ResponseBody
+	public List<Candidacy> GetCandidByuser (@PathVariable("id") int id)
+	{
+		return CS.getCandidacyByuser(id);   
 	}
 
 }

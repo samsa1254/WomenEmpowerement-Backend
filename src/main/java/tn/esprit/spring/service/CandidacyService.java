@@ -16,6 +16,7 @@ public interface CandidacyService {
 	public Candidacy updatereCandidacy(Candidacy cand);
 	public void deleteCandidacy ( Long id );
 	public List<Candidacy> getCandidacyByOffer(Long idoff);	
+	public List<Candidacy> getCandidacyByuser(int idu);
 	public List<Candidacy> FilterByState(String name , String state);
 	public Candidacy ApproveCandid ( Long id, int s );
 	

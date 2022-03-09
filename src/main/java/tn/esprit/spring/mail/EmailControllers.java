@@ -38,12 +38,12 @@ public class EmailControllers {
 		    return "Successfully sent";
 	  }
 	  
-	  public String AcceptedMail(String Mail , String candid , String Off)
+	  public String AcceptedMail(String Mail , String candid , String Off , String state)
 	  {
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setFrom("Slavdorn4@gmail.com");
 			message.setTo(Mail);
-			message.setText("Mr/Mrs"+candid+"\n"+"Your application to" + Off + "Has been approved !");
+			message.setText(" Mr/Mrs : "+candid+"\n"+" Your application to : " + Off + " Has been : " +state+ " ! ");
 			message.setSubject("Woman Empowerement Mailing Bot");
 			mailSender.send(message);
 		 
