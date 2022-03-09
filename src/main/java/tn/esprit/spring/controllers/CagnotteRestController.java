@@ -106,11 +106,11 @@ public class CagnotteRestController {
 	}
 
 	//////              1/4242424242424242/11/2026/123
-	@PostMapping("/pay/{idc}/{carta}/{expMonth}/{expYear}/{cvc}")
+	@PostMapping("/pay/{idc}/{carta}/{expMonth}/{expYear}/{cvc}/{userAmount}")
 	public void Pay(@PathVariable("idc") int idc, @PathVariable("carta") String carta,
 					@PathVariable("expMonth") int expMonth, @PathVariable("expYear") int expYear,
-					@PathVariable("cvc") String cvc) throws StripeException{
-		stripeService.Pay(idc,carta,expMonth,expYear,cvc);
+					@PathVariable("cvc") String cvc,@PathVariable("userAmount") float userAmount) throws StripeException{
+		stripeService.Pay(idc,carta,expMonth,expYear,cvc,userAmount);
 	}
 
 		/*--------------------------------------------------------*/

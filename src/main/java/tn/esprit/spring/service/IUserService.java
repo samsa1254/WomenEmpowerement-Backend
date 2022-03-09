@@ -32,6 +32,12 @@ public interface IUserService {
 
 	List<User> listeDeUserParexpertspeciality(ExpertSpec spec);
 	
+	public void deleteUselessAcounts();
+	
+	
+	
+	
+	
 	void blockuseraccount(User u);
 	void unblockuseraccount(User u);
 	

@@ -18,7 +18,8 @@ import tn.esprit.spring.entities.User;
 @Service
 public interface EventService {
 
-	public void addEvent(Event event,Cagnotte cagnotte);
+
+	public void addEvent(Event event);
 	Event getEventById(Long id);
 	void deleteEvent(Long id);
 	public MessageResponse addParticipant(Long id , List<User> participants);

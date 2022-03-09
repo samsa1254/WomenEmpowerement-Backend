@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.security.UserSecurity;
 @Component
 @Aspect
 @Slf4j

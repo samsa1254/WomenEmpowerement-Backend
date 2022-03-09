@@ -5,11 +5,13 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -108,7 +110,7 @@ public class UserServiceImpl implements IUserService {
 			c.setExpertnumber(null);
 			c.setExpertspeciality(null);
 			c.setSexe(Sexe.Women);
-			c.setIsEnabled(true);
+			c.setIsEnabled(false);
 
 		}
 		
@@ -203,9 +205,20 @@ public class UserServiceImpl implements IUserService {
 		}
 	
 	
+		
+		
+		
+		//Function Of deleting unuseful a acounts 
+		@Scheduled(cron = "0 1 1 * * ?")
+		@Override
+		public void deleteUselessAcounts() {
+			 UserRepository.deleteUselessUsers(false);
+			
+			
+		}
 	
-	
-	
+
+		
 	
 	//Fcts de Cryptage et decryptage de mot de passe
 	

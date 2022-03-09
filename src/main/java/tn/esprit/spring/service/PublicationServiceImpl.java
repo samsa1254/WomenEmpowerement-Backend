@@ -1,8 +1,9 @@
 package tn.esprit.spring.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
-
-
+import java.util.Date;
 import java.util.List;
 
 
@@ -11,24 +12,71 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import tn.esprit.spring.entities.Publication;
+import tn.esprit.spring.entities.forbiden;
 import tn.esprit.spring.repository.PublicationRepository;
+import tn.esprit.spring.repository.forbidenRepository;
 
 @Service
 public class PublicationServiceImpl implements PublicationService {
 
 	@Autowired
 	private PublicationRepository PublicationRep ; 
+	@Autowired
+	private forbidenRepository forbidenRep ;
+	final public LocalTime time = LocalTime.now();
+	final public LocalDate date = LocalDate.now().minusDays(3);
 	@Override
-	public Publication addPub(Publication pub) {
-		PublicationRep.save(pub);
-		return pub;
+	public String addPub(Publication pub) {
+		String textbody= pub.getPost();
+		List<forbiden> badwordlist = (List<forbiden>) forbidenRep.findAll();
+		int compteur=0;
+		for(int i=0 ; i<badwordlist.size(); i++)
+		{
+			if (textbody.contains(badwordlist.get(i).getText()))
+			{
+				compteur++; 
+			}
+		}
+		if (compteur>0)
+		{
+			return "your post contains "+compteur+" bad words";
+			
+		}
+		else	
+				{
+			
+			 PublicationRep.save(pub);
+			 return "Post added successfuly " ;
+				}
 	}
+		
+	
 
 	@Override
-	public Publication updatePub(Publication pub) {
-		PublicationRep.save(pub);
-		return pub;
+	public String  updatePub(Publication pub) {
+		String textbody= pub.getPost();
+		List<forbiden> badwordlist = (List<forbiden>) forbidenRep.findAll();
+		int compteur=0;
+		for(int i=0 ; i<badwordlist.size(); i++)
+		{
+			if (textbody.contains(badwordlist.get(i).getText()))
+			{
+				compteur++; 
+			}
+		}
+		if (compteur>0)
+		{
+			return "your post contains "+compteur+" bad words";
+			
+		}
+		else	
+				{
+			
+			 PublicationRep.save(pub);
+			 return "Post added successfuly " ;
+				}
 	}
 
 	@Override
@@ -51,11 +99,17 @@ public class PublicationServiceImpl implements PublicationService {
 
 	@Override
 	public List<Publication> tendency() {
+	
+		
 		List<Publication> pubstendency =  new ArrayList<Publication>();
 		List<Long> pubids = PublicationRep.Tendency();
 		for (Long item : pubids) {
 			Publication p= PublicationRep.findById(item).get();
-			pubstendency.add(p);
+		
+			if (( p.getDate().isAfter(date)) && (p.getTime().isBefore(time))  && ( pubstendency.size()<9))
+			{
+				pubstendency.add(p);
+			}
 			
 		}
 		
@@ -64,11 +118,17 @@ public class PublicationServiceImpl implements PublicationService {
 
 	@Override
 	public List<Publication> MostReacted() {
+
 		List<Publication> pubreact = new ArrayList<Publication>();
 		List<Long> pubids = PublicationRep.MostReacted();
 		for (Long item : pubids) {
 			Publication p =PublicationRep.findById(item).get();
-			pubreact.add(p);
+			if  (( p.getDate().isAfter(date)) && (p.getTime().isBefore(time))  && (pubreact.size()<9) )
+			{
+				pubreact.add(p);
+			}
+			
+			
 		}
 		return pubreact;
 	}
@@ -86,6 +146,7 @@ public class PublicationServiceImpl implements PublicationService {
 		
 		return threevalues;
 	}
+
 	
 	
 

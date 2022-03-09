@@ -1,5 +1,7 @@
 package tn.esprit.spring.entities;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -37,8 +43,10 @@ public class Publication {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long idPublication;
 	private String post ; 
-	
-	private Date date ; 
+	@CreationTimestamp
+	private LocalDate date ; 
+	@CreationTimestamp
+	private LocalTime time ;
 	private String state ; 
 	
 	@ManyToOne

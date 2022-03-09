@@ -48,9 +48,9 @@ public class CommentDRestController {
 	
 	@PostMapping("/add-affectcomment/{idPublication}")
 	@ResponseBody
-	public void ajouterEtAffceterCommentairePub( @RequestBody CommentD commentD ,@PathVariable("idPublication") Long idPublication)
+	public String ajouterEtAffceterCommentairePub( @RequestBody CommentD commentD ,@PathVariable("idPublication") Long idPublication)
 	{
-		commentDSer.AddCommentPub(commentD, idPublication);
+		return commentDSer.AddCommentPub(commentD, idPublication);
 	}
 	
 	@PostMapping("/add-cmntd")
@@ -73,7 +73,7 @@ public class CommentDRestController {
 	@PutMapping("/modify-cmntd")
 	@ApiOperation(value = "modifier un cmntd ")
 	@ResponseBody
-	public CommentD modifyCmnt(@RequestBody CommentD c)
+	public String modifyCmnt(@RequestBody CommentD c)
 	{
 		
 		return commentDSer.updateComment(c); 

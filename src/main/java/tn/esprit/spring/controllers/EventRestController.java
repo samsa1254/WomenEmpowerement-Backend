@@ -61,11 +61,10 @@ public class EventRestController {
 	private JavaMailSender javaMailSender;
 
 	@PostMapping("/addEvent")
-	@ResponseBody
-	public Event addEvent(@RequestBody Event event,@RequestBody Cagnotte cagnotte) {
-		eventService.addEvent(event,cagnotte);
-		return event;
-	}	
+	public ResponseEntity<Event> addEvent(@RequestBody Event event) {
+		eventService.addEvent(event);
+		return ResponseEntity.ok().body(event);
+	}
 	
 	@PostMapping("/addParticipant/{id}")
 	 public ResponseEntity<MessageResponse> addParticipant(@PathVariable("id") Long id ,@RequestBody List<User> participants) {

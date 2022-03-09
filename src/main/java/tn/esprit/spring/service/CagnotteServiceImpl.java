@@ -40,7 +40,7 @@ public class CagnotteServiceImpl implements CagnotteService{
 	    	cagnotteRepository.deleteById(id);
 	    }
 	    
-
+// commit 
 	
 
 }

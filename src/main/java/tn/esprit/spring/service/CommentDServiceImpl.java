@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import tn.esprit.spring.entities.CommentD;
  
 import tn.esprit.spring.entities.Publication;
+import tn.esprit.spring.entities.forbiden;
 import tn.esprit.spring.repository.CommentDRepository;
 import tn.esprit.spring.repository.PublicationRepository;
+import tn.esprit.spring.repository.forbidenRepository;
 
 @Service
 public class CommentDServiceImpl  implements CommentDService{
@@ -19,15 +21,39 @@ public class CommentDServiceImpl  implements CommentDService{
 	private CommentDRepository CommentRep ;
 	@Autowired
 	private PublicationRepository PubRep ;
+	@Autowired
+	private forbidenRepository forbidenRep ;
 	
 	@Override
-	public CommentD AddCommentPub(CommentD commentD, Long idPublication) {
-		
-		
+	public String AddCommentPub(CommentD commentD, Long idPublication) {
 		Publication p =PubRep.findById(idPublication).get();
-	    commentD.setPublication(p);
-	    CommentRep.save(commentD);
-	    return commentD ;
+		String textbody= commentD.getTenor();
+		List<forbiden> badwordlist = (List<forbiden>) forbidenRep.findAll();
+		int compteur=0;
+		for(int i=0 ; i<badwordlist.size(); i++)
+		{
+			if (textbody.contains(badwordlist.get(i).getText()))
+			{
+				compteur++; 
+			}
+		}
+		if (compteur>0)
+		{
+			return "your Comment contains "+compteur+" bad words";
+			
+		}
+		else	
+				{
+			
+		
+		    commentD.setPublication(p);
+		    CommentRep.save(commentD);
+		    return "Comment added successfuly " ;
+			 
+				}
+		
+		
+	   
 		
 	}
 	
@@ -38,9 +64,31 @@ public class CommentDServiceImpl  implements CommentDService{
 	}
 
 	@Override
-	public CommentD updateComment(CommentD c) {
-		CommentRep.save(c);
-		return c ;
+	public String updateComment(CommentD commentD) {
+		String textbody= commentD.getTenor();
+		List<forbiden> badwordlist = (List<forbiden>) forbidenRep.findAll();
+		int compteur=0;
+		for(int i=0 ; i<badwordlist.size(); i++)
+		{
+			if (textbody.contains(badwordlist.get(i).getText()))
+			{
+				compteur++; 
+			}
+		}
+		if (compteur>0)
+		{
+			return "your Comment contains "+compteur+" bad words";
+			
+		}
+		else	
+				{
+			
+		
+		   
+		    CommentRep.save(commentD);
+			 return "Comment added successfuly " ;
+				}
+		
 	}
 
 	@Override

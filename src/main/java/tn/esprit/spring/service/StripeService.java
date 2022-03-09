@@ -144,7 +144,7 @@ public class StripeService {
 //
 //	}
     @Transactional
-    public String Pay(int idCagnotte,String carta, int expMonth, int expYear, String cvc) throws StripeException{
+    public String Pay(int idCagnotte,String carta, int expMonth, int expYear, String cvc, float userAmount) throws StripeException{
         Cagnotte cagnotte = cagnotteRepository.getById((long) idCagnotte);
 
 
@@ -156,15 +156,18 @@ public class StripeService {
             cardParams.put("exp_month", expMonth);
             cardParams.put("exp_year", expYear);
             cardParams.put("cvc", cvc);
-            int nMontant= (int) cagnotte.getAmount();
+
             tokenParams.put("card", cardParams);
             Token token =Token.create(tokenParams);
             if (token.getId()!=null){
-                params.put("amount", nMontant);
+                params.put("amount",(int) userAmount);
                 params.put("description", "payment cagnotte");
                 params.put("currency", "eur");
                 params.put("source", token.getId());
-                Charge charge = Charge.create(params);
+                Charge.create(params);
+                float oldAmount= cagnotte.getAmount();
+                float newAmount=oldAmount+userAmount;
+                cagnotte.setAmount(newAmount);
             }
 
 

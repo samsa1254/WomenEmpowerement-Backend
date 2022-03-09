@@ -1,5 +1,6 @@
 package tn.esprit.spring.service;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -10,8 +11,8 @@ import tn.esprit.spring.entities.Publication;
 @Service
 public interface PublicationService {
 
-	public Publication addPub( Publication pub );
-	public Publication updatePub ( Publication pub );
+	public String addPub( Publication pub );
+	public String updatePub ( Publication pub );
 	public void deletepubById ( Long id );
 	public Publication retrievebyId ( Long id );
 	public List<Publication> retrieveallPubs ();
