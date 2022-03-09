@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.Api;
@@ -37,7 +39,7 @@ public class Publication {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long idPublication;
 	private String post ; 
-	
+	@CreationTimestamp
 	private Date date ; 
 	private String state ; 
 	

@@ -147,6 +147,7 @@ public class WebsecurityConfig extends WebSecurityConfigurerAdapter {
          .ignoring()
          .antMatchers("/h2-console/**");
  }
+}
 	
 	
 	
@@ -163,14 +164,3 @@ public class WebsecurityConfig extends WebSecurityConfigurerAdapter {
       .and()
       .withUser("admin").password("{noop}password").roles("Admin");
  }*/
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-}
