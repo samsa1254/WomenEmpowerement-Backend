@@ -6,6 +6,10 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,10 +56,28 @@ public class UserController {
 	 private EmailSenderService emailSenderService;
 	
 	
+	 
+	
+	
+	 
+	  
+	  @GetMapping("/retrieve-User1")
+		@ResponseBody
+		public User retrieveUser1() {
+		  
+		  SecurityContext context = SecurityContextHolder.getContext();
+	        Authentication auth = context.getAuthentication();
+	        User u = userRepository.findByLogin(auth.getName());
+	        int UserId = u.getIduser() ; 
+	        
+		return UserService.retrieveUser(UserId);
+		}
+	  
 	@GetMapping("/retrieve-all-User")
 	@ResponseBody
 	public List<User> getUser() {
 	List<User> listUser = UserService.retrieveAllUser();
+	//System.out.print(s) ; 
 	return listUser;
 	}
 
@@ -103,6 +125,8 @@ public class UserController {
 	public User modifyUser(@RequestBody User User) {
 	return UserService.updateUser(User);
 	}
+	
+	
 	
 	
 	@DeleteMapping("/Delete-Useless-User/")

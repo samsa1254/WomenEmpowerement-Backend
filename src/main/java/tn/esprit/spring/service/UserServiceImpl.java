@@ -94,7 +94,7 @@ public class UserServiceImpl implements IUserService {
 			c.setTutorspeciality(null);
 			c.setTutortype(null);
 			c.setExpertadress(null);
-			c.setExpertnumber(null);
+			//c.setExpertnumber(null);
 			c.setExpertspeciality(null);
 			c.setIsEnabled(true);
 
@@ -107,7 +107,7 @@ public class UserServiceImpl implements IUserService {
 			c.setTutorspeciality(null);
 			c.setTutortype(null);
 			c.setExpertadress(null);
-			c.setExpertnumber(null);
+			//c.setExpertnumber(null);
 			c.setExpertspeciality(null);
 			c.setSexe(Sexe.Women);
 			c.setIsEnabled(false);
@@ -119,7 +119,7 @@ public class UserServiceImpl implements IUserService {
 			c.setAdminsector(null);
 			c.setSubscribtion(null);
 			c.setExpertadress(null);
-			c.setExpertnumber(null);
+			//c.setExpertnumber(null);
 			c.setExpertspeciality(null);
 			c.setIsEnabled(true);
 
@@ -153,7 +153,7 @@ public class UserServiceImpl implements IUserService {
 			c.setTutorspeciality(null);
 			c.setTutortype(null);
 			c.setExpertadress(null);
-			c.setExpertnumber(null);
+			//c.setExpertnumber(null);
 			c.setExpertspeciality(null);
 		}
 		
@@ -164,7 +164,7 @@ public class UserServiceImpl implements IUserService {
 			c.setTutorspeciality(null);
 			c.setTutortype(null);
 			c.setExpertadress(null);
-			c.setExpertnumber(null);
+			//c.setExpertnumber(null);
 			c.setExpertspeciality(null);
 			c.setSexe(Sexe.Women);
 		}
@@ -173,7 +173,7 @@ public class UserServiceImpl implements IUserService {
 		{
 			c.setAdminsector(null);
 			c.setSubscribtion(null);
-			c.setExpertadress(null);
+			//c.setExpertadress(null);
 			c.setExpertnumber(null);
 			c.setExpertspeciality(null);
 		}
