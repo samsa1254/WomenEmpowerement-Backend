@@ -10,7 +10,7 @@ import tn.esprit.spring.entities.Disponibilite;
 @Service
 public interface DisponibiliteService {
 	
-	public Disponibilite addDisponibilite( Disponibilite app );
+	public Disponibilite addDisponibilite( Disponibilite app, int iduser );
 	public Disponibilite updateDisponibilite ( Disponibilite app );
 	public void deleteDispById ( Long id );
 	public Disponibilite retrievebyId ( Long id );
@@ -18,6 +18,7 @@ public interface DisponibiliteService {
 	List<Disponibilite> findBydatedebut(Date dated);
 	List<Disponibilite> findBydatefin(Date datef);
 	List<Disponibilite> findByPeriod(Date dated,Date datef);
+	public List<Disponibilite> getuseravailibility(int iduser);
 	
 
 }

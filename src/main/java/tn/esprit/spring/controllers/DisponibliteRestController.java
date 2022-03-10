@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +23,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Appointment;
 import tn.esprit.spring.entities.Disponibilite;
+import tn.esprit.spring.entities.User;
+import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.service.AppointmentService;
 import tn.esprit.spring.service.DisponibiliteService;
 
@@ -29,6 +34,8 @@ import tn.esprit.spring.service.DisponibiliteService;
 public class DisponibliteRestController {
 	 @Autowired
 		private DisponibiliteService dispSer ;
+	 @Autowired
+	    private UserRepository uRep ;
 		
 		@GetMapping("/retrieve-all-disps")
 		@ApiOperation(value = "Récupérer la liste des disponibilites ")
@@ -51,8 +58,11 @@ public class DisponibliteRestController {
 		@ApiOperation(value = "ajouter une disponiblite ")
 		@ResponseBody 
 		public Disponibilite addAvailiibity(@RequestBody Disponibilite disp )
-		{
-			Disponibilite d= dispSer.addDisponibilite(disp);
+		{   SecurityContext context = SecurityContextHolder.getContext();
+        Authentication auth = context.getAuthentication();
+        User u = uRep.findByLogin(auth.getName());
+         int UserId = u.getIduser() ; 
+			Disponibilite d= dispSer.addDisponibilite(disp,UserId);
 			return d ; 
 			
 		}
@@ -80,6 +90,17 @@ public class DisponibliteRestController {
 		public List<Disponibilite> getavailibilitybyperiod (@PathVariable("datedebut")@DateTimeFormat(iso=ISO.DATE) Date datedebut, @PathVariable("datefin")@DateTimeFormat(iso=ISO.DATE) Date Datefin)
 		{   
 			return  dispSer.findByPeriod(datedebut, Datefin);   
+		}
+		
+		@GetMapping("/retrieve-useravailibility")
+		@ApiOperation(value = "recuperer les disponibilite d'un utilisateur   ")
+		@ResponseBody
+		public List<Disponibilite> getuseravailibility ()
+		{   SecurityContext context = SecurityContextHolder.getContext();
+            Authentication auth = context.getAuthentication();
+            User u = uRep.findByLogin(auth.getName());
+            int UserId = u.getIduser() ; 
+			return  dispSer.getuseravailibility(UserId);   
 		}
 		
 		

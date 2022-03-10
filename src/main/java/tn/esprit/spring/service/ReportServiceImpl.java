@@ -27,13 +27,16 @@ public class ReportServiceImpl implements ReportService {
 	@Autowired
 	private IUserService uSer ;
 	@Override
-	public Report addReport(Report rep) {
+	public Report addReport(Report rep, int iduser) {
+		User u=uRep.findById(iduser).get();
+		rep.setUser(u);
 		reportRep.save(rep);
 		return rep;
 	}
 
 	@Override
 	public Report updatereport(Report rep) {
+		
 		reportRep.save(rep);
 		return rep;
 	}
@@ -120,6 +123,13 @@ public class ReportServiceImpl implements ReportService {
 	      uSer.unblockuseraccount(u);;
 	      r.setStatus("treated");
      	  reportRep.save(r);
+	}
+
+	@Override
+	public List<Report> getuserreports(int iduser) {
+		User u=uRep.findById(iduser).get();
+		List<Report> r=u.getReports();
+		return r;
 	}
 
 }

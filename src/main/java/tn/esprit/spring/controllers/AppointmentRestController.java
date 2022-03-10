@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -86,10 +89,15 @@ public class AppointmentRestController {
 	}
 	
 	@SuppressWarnings("deprecation")
-	@PostMapping("/add-affectappointment/{idexpert}/{iduser})")
+	@PostMapping("/add-affectappointment/{idexpert})")
 	@ResponseBody
-	public void ajouterEtAffecterrendezvousauexpertetutilisteur( @RequestBody Appointment appointment ,@PathVariable("idexpert") int idexpert,@PathVariable("iduser") int iduser, SMS sms1,SMS sms2)
-	{   User u=urep.findById(iduser).get();
+	public void ajouterEtAffecterrendezvousauexpertetutilisteur( @RequestBody Appointment appointment ,@PathVariable("idexpert") int idexpert, SMS sms1,SMS sms2)
+	{   SecurityContext context = SecurityContextHolder.getContext();
+    Authentication auth = context.getAuthentication();
+    User us = urep.findByLogin(auth.getName());
+    int UserId = us.getIduser() ; 
+		
+		User u=urep.findById(UserId).get();
 	    User e=urep.findById(idexpert).get();
 	    System.out.println(appointment.getDateAppointment());
 	    appointment.getDateAppointment().setHours(appointment.getDateAppointment().getHours()-1);
@@ -102,7 +110,7 @@ public class AppointmentRestController {
 		sSer.send(sms2);
 		//ec.AppointmentMail(u.getEmail(), u, e, appointment);
 		 appointment.getDateAppointment().setHours(appointment.getDateAppointment().getHours()+1);
-		AppSer.AddandAffectAppointmentoexpertanduser(appointment, idexpert, iduser);
+		AppSer.AddandAffectAppointmentoexpertanduser(appointment, idexpert, UserId);
 	}
 	
 	
