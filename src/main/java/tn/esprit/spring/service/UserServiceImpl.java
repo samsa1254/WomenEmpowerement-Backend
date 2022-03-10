@@ -173,8 +173,10 @@ public class UserServiceImpl implements IUserService {
 		{
 			c.setAdminsector(null);
 			c.setSubscribtion(null);
-			//c.setExpertadress(null);
-			c.setExpertnumber(null);
+			c.setExpertadress(null);
+			//c.setExpertnumber(null);
+			c.setExpertadress(null);
+			//c.setExpertnumber(null);
 			c.setExpertspeciality(null);
 		}
 		

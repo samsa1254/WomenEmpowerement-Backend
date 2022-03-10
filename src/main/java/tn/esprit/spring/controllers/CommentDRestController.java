@@ -3,6 +3,9 @@ package tn.esprit.spring.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +20,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import tn.esprit.spring.entities.CommentD;
-
+import tn.esprit.spring.entities.User;
+import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.service.CommentDService;
 
 @Api(tags = "CommentD Management")
@@ -28,6 +32,8 @@ public class CommentDRestController {
 	
 	@Autowired
 	 private CommentDService commentDSer ;
+	@Autowired
+	private UserRepository UserRep ;
 	
 	@GetMapping("/retrieve-all-cmntsd")
 	@ApiOperation(value = "Récupérer la liste des cmntsd ")
@@ -50,7 +56,11 @@ public class CommentDRestController {
 	@ResponseBody
 	public String ajouterEtAffceterCommentairePub( @RequestBody CommentD commentD ,@PathVariable("idPublication") Long idPublication)
 	{
-		return commentDSer.AddCommentPub(commentD, idPublication);
+		SecurityContext context = SecurityContextHolder.getContext();
+	    Authentication auth = context.getAuthentication();
+	   User u = UserRep.findByLogin(auth.getName());
+	     int id = u.getIduser() ; 
+		return commentDSer.AddCommentPub(commentD, idPublication,id);
 	}
 	
 	@PostMapping("/add-cmntd")

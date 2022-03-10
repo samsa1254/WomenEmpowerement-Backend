@@ -38,5 +38,6 @@ public class ReactionC {
 	@ManyToOne
 	@JsonIgnore
 	private CommentD commentd ;
+	
 
 }

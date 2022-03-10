@@ -9,15 +9,22 @@ import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Appointment;
 import tn.esprit.spring.entities.Disponibilite;
+import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.AppointmentRepository;
 import tn.esprit.spring.repository.DisponibiliteRepository;
+import tn.esprit.spring.repository.UserRepository;
 
 @Service
 public class DisponibiliteServiceImpl implements DisponibiliteService {
 	@Autowired
 	private DisponibiliteRepository disRep ; 
+	@Autowired
+	private UserRepository uRep ;
 	@Override
-	public Disponibilite addDisponibilite(Disponibilite disp) {
+	
+	public Disponibilite addDisponibilite(Disponibilite disp,int iduser) {
+		User u=uRep.findById(iduser).get();
+		disp.setUser(u);
 		disRep.save(disp);
 		return disp;
 	}
@@ -62,6 +69,13 @@ public class DisponibiliteServiceImpl implements DisponibiliteService {
 		return disRep.findByDatedebutAfterAndDatefinBefore(dated, datef) ;
 		
 		
+	}
+
+	@Override
+	public List<Disponibilite> getuseravailibility(int iduser) {
+		User u=uRep.findById(iduser).get();
+		List<Disponibilite> d=u.getDisponibilite();
+		return d;
 	}
 
 }

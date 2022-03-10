@@ -3,6 +3,9 @@ package tn.esprit.spring.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Appointment;
+import tn.esprit.spring.entities.Disponibilite;
 import tn.esprit.spring.entities.Report;
 import tn.esprit.spring.entities.SMS;
 import tn.esprit.spring.entities.User;
@@ -59,8 +63,11 @@ public class ReportRestController {
 	@ApiOperation(value = "ajouter un Report ")
 	@ResponseBody 
 	public Report addReport(@RequestBody Report rep )
-	{
-		Report r= repSer.addReport(rep);
+	{   SecurityContext context = SecurityContextHolder.getContext();
+    Authentication auth = context.getAuthentication();
+    User u = urep.findByLogin(auth.getName());
+    int UserId = u.getIduser() ; 
+		Report r= repSer.addReport(rep,UserId);
 		return r ; 
 		
 	}
@@ -117,6 +124,17 @@ public class ReportRestController {
 	public void treatreportbyunblockinguser( @PathVariable("idreport") Long idreport,@PathVariable("iduser") int iduser)
 	{   
 		repSer.treataReportbyunblockinguser(idreport, iduser);
+	}
+	
+	@GetMapping("/retrieve-useravailibility")
+	@ApiOperation(value = "recuperer les disponibilite d'un utilisateur   ")
+	@ResponseBody
+	public List<Report> getuseravailibility ()
+	{   SecurityContext context = SecurityContextHolder.getContext();
+        Authentication auth = context.getAuthentication();
+        User u = urep.findByLogin(auth.getName());
+        int UserId = u.getIduser() ; 
+		return  repSer.getuserreports(UserId);   
 	}
 
 }

@@ -61,9 +61,9 @@ public class UserController {
 	
 	 
 	  
-	  @GetMapping("/retrieve-User1")
+	  @GetMapping("/retrieve-me")
 		@ResponseBody
-		public User retrieveUser1() {
+		public User retrieveMe() {
 		  
 		  SecurityContext context = SecurityContextHolder.getContext();
 	        Authentication auth = context.getAuthentication();
