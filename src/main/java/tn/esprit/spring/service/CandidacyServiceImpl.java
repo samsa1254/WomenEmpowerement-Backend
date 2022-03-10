@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 
@@ -25,7 +27,7 @@ public class CandidacyServiceImpl  implements CandidacyService{
 	@Autowired
 	EmailControllers EC;
 	
-	
+
 	
 	@Override
 	public Candidacy retrievebyID(Long id) {
@@ -50,6 +52,7 @@ public class CandidacyServiceImpl  implements CandidacyService{
 	@Override
 	public Candidacy ApproveCandid(Long id , int s) {
 		Candidacy c = CR.findById(id).get();
+		
 			if ((s<4) && (s>0)) {
 		if (s==1)
 		c.setState("Approved");
@@ -57,15 +60,22 @@ public class CandidacyServiceImpl  implements CandidacyService{
 		c.setState("Denied");
 		else if (s==3)
 		c.setState("On Hold");	
+	    
+		String no = c.getCandidName();
+		String mu = c.getUser().getEmail();
+		String un = c.getUser().getName();
 		
+		String st = c.getState();
+	
+		System.out.println(mu + st);
+		EC.AcceptedMail(mu, un, no, st);
 		CR.save(c);
 			}			
 		return c;
 	}
 	@Override
 	public void deleteCandidacy(Long id) {
-		CR.deleteById(id);
-		
+		CR.deleteById(id);	
 	}
 	
 	@Override
@@ -101,6 +111,10 @@ public class CandidacyServiceImpl  implements CandidacyService{
 	@Override
 	public List<Candidacy> FilterByState(String name ,String state) {	
 		return CR.getCandidState(name , state);
+	}
+	@Override
+	public List<Candidacy> getCandidacyByuser(int idu) {
+		return CR.getUserCAn(idu);
 	}
 	
 	

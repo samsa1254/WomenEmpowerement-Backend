@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 
 import tn.esprit.spring.entities.Publication;
+import tn.esprit.spring.entities.User;
 import tn.esprit.spring.entities.forbiden;
 import tn.esprit.spring.repository.PublicationRepository;
+import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.repository.forbidenRepository;
 
 @Service
@@ -25,11 +27,15 @@ public class PublicationServiceImpl implements PublicationService {
 	private PublicationRepository PublicationRep ; 
 	@Autowired
 	private forbidenRepository forbidenRep ;
+	@Autowired
+	private UserRepository UserRep ;
 	final public LocalTime time = LocalTime.now();
 	final public LocalDate date = LocalDate.now().minusDays(3);
 	@Override
-	public String addPub(Publication pub) {
+	public String addPub(Publication pub , int id ) {
 		String textbody= pub.getPost();
+		User u =UserRep.findById(id).get(); 
+		pub.setUser(u);
 		List<forbiden> badwordlist = (List<forbiden>) forbidenRep.findAll();
 		int compteur=0;
 		for(int i=0 ; i<badwordlist.size(); i++)
@@ -46,6 +52,8 @@ public class PublicationServiceImpl implements PublicationService {
 		}
 		else	
 				{
+		
+		
 			
 			 PublicationRep.save(pub);
 			 return "Post added successfuly " ;

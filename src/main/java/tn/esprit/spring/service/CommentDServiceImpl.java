@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import tn.esprit.spring.entities.CommentD;
  
 import tn.esprit.spring.entities.Publication;
+import tn.esprit.spring.entities.User;
 import tn.esprit.spring.entities.forbiden;
 import tn.esprit.spring.repository.CommentDRepository;
 import tn.esprit.spring.repository.PublicationRepository;
+import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.repository.forbidenRepository;
 
 @Service
@@ -23,10 +25,15 @@ public class CommentDServiceImpl  implements CommentDService{
 	private PublicationRepository PubRep ;
 	@Autowired
 	private forbidenRepository forbidenRep ;
+	@Autowired
+	private UserRepository UserRep ;
 	
 	@Override
-	public String AddCommentPub(CommentD commentD, Long idPublication) {
+	public String AddCommentPub(CommentD commentD, Long idPublication , int id ) {
 		Publication p =PubRep.findById(idPublication).get();
+		User u =UserRep.findById(id).get(); 
+		commentD.setUser(u);
+		
 		String textbody= commentD.getTenor();
 		List<forbiden> badwordlist = (List<forbiden>) forbidenRep.findAll();
 		int compteur=0;
@@ -46,6 +53,7 @@ public class CommentDServiceImpl  implements CommentDService{
 				{
 			
 		
+			
 		    commentD.setPublication(p);
 		    CommentRep.save(commentD);
 		    return "Comment added successfuly " ;

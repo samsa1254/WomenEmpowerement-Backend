@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.Api;
@@ -42,9 +44,11 @@ public class Offer {
 		
 	private String status;
 	
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Date date_Interview;
 	
 	private float salary;
+	
 	
 	private String location;
 	

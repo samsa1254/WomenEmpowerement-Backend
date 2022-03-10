@@ -5,6 +5,9 @@ import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +22,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Ad;
 import tn.esprit.spring.entities.Publication;
+import tn.esprit.spring.entities.User;
+import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.service.PublicationService;
 
 
@@ -30,6 +35,10 @@ public class PublicationRestController {
 
 	@Autowired
 	 private PublicationService PubSer ;
+	@Autowired
+	private UserRepository UserRep ;
+	
+	
 	
 	@GetMapping("/retrieve-all-pubs")
 	@ApiOperation(value = "Récupérer la liste des pubs ")
@@ -53,7 +62,11 @@ public class PublicationRestController {
 	@ResponseBody 
 	public String addPublication(@RequestBody Publication pub )
 	{
-	return  PubSer.addPub(pub);
+		SecurityContext context = SecurityContextHolder.getContext();
+	    Authentication auth = context.getAuthentication();
+	   User u = UserRep.findByLogin(auth.getName());
+	     int id = u.getIduser() ; 
+	return  PubSer.addPub(pub, id );
 		
 		
 	}
