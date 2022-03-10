@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 
@@ -25,7 +27,7 @@ public class CandidacyServiceImpl  implements CandidacyService{
 	@Autowired
 	EmailControllers EC;
 	
-	
+
 	
 	@Override
 	public Candidacy retrievebyID(Long id) {
@@ -73,8 +75,7 @@ public class CandidacyServiceImpl  implements CandidacyService{
 	}
 	@Override
 	public void deleteCandidacy(Long id) {
-		CR.deleteById(id);
-		
+		CR.deleteById(id);	
 	}
 	
 	@Override
@@ -113,7 +114,6 @@ public class CandidacyServiceImpl  implements CandidacyService{
 	}
 	@Override
 	public List<Candidacy> getCandidacyByuser(int idu) {
-
 		return CR.getUserCAn(idu);
 	}
 	
