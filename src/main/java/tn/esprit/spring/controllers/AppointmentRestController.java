@@ -93,14 +93,14 @@ public class AppointmentRestController {
 	    User e=urep.findById(idexpert).get();
 	    System.out.println(appointment.getDateAppointment());
 	    appointment.getDateAppointment().setHours(appointment.getDateAppointment().getHours()-1);
-		sms1.setMessage("Mrs "+u.getName()+"\n"+"You have an appointment with Mr/Mrs"+" "+e.getName()+" at: "+appointment.getDateAppointment());
+		sms1.setMessage("Mrs/Mr "+u.getName()+"\n"+"You have an appointment with Mr/Mrs"+" "+e.getName()+" at: "+appointment.getDateAppointment());
 	    sms1.setTo(u.getExpertnumber());
 	    System.out.println(u.getExpertnumber());
 	    sms2.setTo(e.getExpertnumber());
 	    sSer.send(sms1);
-	    sms2.setMessage("Mrs "+e.getName()+"\n"+"You have an appointment with Mr/Mrs"+" "+u.getName()+" at: "+appointment.getDateAppointment());
+	    sms2.setMessage("Mrs/Mr "+e.getName()+"\n"+"You have an appointment with Mr/Mrs"+" "+u.getName()+" at: "+appointment.getDateAppointment());
 		sSer.send(sms2);
-		ec.AppointmentMail(u.getEmail(), u, e, appointment);
+		//ec.AppointmentMail(u.getEmail(), u, e, appointment);
 		 appointment.getDateAppointment().setHours(appointment.getDateAppointment().getHours()+1);
 		AppSer.AddandAffectAppointmentoexpertanduser(appointment, idexpert, iduser);
 	}

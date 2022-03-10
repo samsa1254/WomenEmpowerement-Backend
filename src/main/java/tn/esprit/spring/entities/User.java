@@ -180,5 +180,15 @@ public class User implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy ="user" )
 	private List<Candidacy> Candidacies  ;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy ="user" )
+	private List<CommentD> commentDs  ;
+	
+
+	@JsonIgnore
+	@OneToMany(mappedBy ="user" )
+	private List<Reaction> reactions  ;
+	
 
 }

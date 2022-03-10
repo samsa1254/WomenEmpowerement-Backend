@@ -11,11 +11,11 @@ import tn.esprit.spring.entities.SMS;
 @Service
 public class SmsService {
 	
-	private final String ACCOUNT_SID ="AC63730500d43eff29fe76589260761cd2";
+	private final String ACCOUNT_SID ="AC8ccf272a858a32fd75bc3f96f41a139a";
 
-    private final String AUTH_TOKEN = "6d111b09ad24f43369da0ec4ec3b9572";
+    private final String AUTH_TOKEN = "2afce569bc6a2ba724b4ac35ebdc56fe";
 
-    private final String FROM_NUMBER = "+12058815436";
+    private final String FROM_NUMBER = "+17319373302";
 
     public void send(SMS sms) {
     	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);

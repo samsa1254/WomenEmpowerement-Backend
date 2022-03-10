@@ -34,7 +34,7 @@ public class EmailControllers {
 	  public String ApplicationMail(String Mail , String candid , String Off , String datea)
 	  {
 			SimpleMailMessage message = new SimpleMailMessage();
-			message.setFrom("Slavdorn4@gmail.com");
+			message.setFrom("womenempowermentesprit@gmail.com");
 			message.setTo(Mail);
 			message.setText("Mr/Mrs : "+candid+" \n "+" Your application for : " + Off + " \n " +"At :" +datea+ " : Has been successful !");
 			message.setSubject("Woman Empowerement Mailing Bot");
@@ -46,7 +46,7 @@ public class EmailControllers {
 	  public String AcceptedMail(String Mail , String candid , String Off , String state)
 	  {
 			SimpleMailMessage message = new SimpleMailMessage();
-			message.setFrom("Slavdorn4@gmail.com");
+			message.setFrom("womenempowermentesprit@gmail.com");
 			message.setTo(Mail);
 			message.setText(" Mr/Mrs : "+candid+"\n"+" Your application to : " + Off + " Has been : " +state+ " ! ");
 			message.setSubject("Woman Empowerement Mailing Bot");
@@ -60,7 +60,7 @@ public class EmailControllers {
 	  {
 		   
 			SimpleMailMessage message = new SimpleMailMessage();
-			message.setFrom("Slavdorn4@gmail.com");
+			message.setFrom("womenempowermentesprit@gmail.com");
 			message.setTo(Mail);
 			message.setText("Dear Client :"+name+" welcome in our event we wish that will donate for the womenempowerement !! ");
 			message.setSubject("Woman Empowerement Mailing Bot");

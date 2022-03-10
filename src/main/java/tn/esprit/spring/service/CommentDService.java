@@ -9,7 +9,7 @@ import tn.esprit.spring.entities.CommentD;
 @Service
 public interface CommentDService {
 
-	public String AddCommentPub(CommentD commentD, Long idPublication);
+	public String AddCommentPub(CommentD commentD, Long idPublication , int id);
 	public CommentD addComment ( CommentD c);
 	public String updateComment(CommentD c);
 	public void DeleteComment ( Long id ) ;
