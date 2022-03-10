@@ -10,7 +10,7 @@ import tn.esprit.spring.entities.Reaction;
 public interface ReactionService {
 	public Reaction retrievebyID(Long id);
 	public List<Reaction> retrieveAll();
-	public Reaction addReaction( Reaction reaction , Long idPublication);
+	public Reaction addReaction( Reaction reaction , Long idPublication , int id );
 	
 	public Reaction updatereReaction(Reaction reaction);
 	public void deleteReaction ( Long id );

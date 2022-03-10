@@ -45,5 +45,9 @@ public class CommentD {
 	@ManyToOne
 	@JsonIgnore
 	private Publication publication ; 
+	
+	@ManyToOne
+	@JsonIgnore
+	private User user ; 
 
 }

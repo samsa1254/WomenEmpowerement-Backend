@@ -11,7 +11,7 @@ import tn.esprit.spring.entities.Publication;
 @Service
 public interface PublicationService {
 
-	public String addPub( Publication pub );
+	public String addPub( Publication pub , int id  );
 	public String updatePub ( Publication pub );
 	public void deletepubById ( Long id );
 	public Publication retrievebyId ( Long id );

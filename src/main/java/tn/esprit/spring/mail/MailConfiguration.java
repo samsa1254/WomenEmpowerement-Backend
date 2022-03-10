@@ -17,7 +17,7 @@ public class MailConfiguration {
     mailSender.setPort(587);
     mailSender.setUsername("womenempowermentesprit@gmail.com");
 
-    mailSender.setPassword("fgblpmqckkkgbaw");
+    mailSender.setPassword("pcmqyzvxczbukuvn");
 
 
     Properties props = mailSender.getJavaMailProperties();
