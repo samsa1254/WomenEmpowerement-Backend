@@ -44,12 +44,12 @@ public class StripeService {
     }
 
 
-    public String createStripeCustomer(long idUser) {
+    public String createStripeCustomer(long iduser) {
 
         // stripe key
         Stripe.apiKey = "sk_test_51KYTIPC1o50pbIHtWbBDZlBvBn1oGV49cvOK0xGFbekZqHc2bEJCQVULPylWWzKR6EtqRapH1gYJ36xe9Eta7KZh0030QRWcqN";
 
-        User user = userRepository.findById((int) idUser).get();
+        User user = userRepository.findById((int) iduser).get();
         Map<String, Object> params = new HashMap<>();
         params.put("description",user.getName()+" "+user.getLastname());
         params.put("email", user.getEmail());

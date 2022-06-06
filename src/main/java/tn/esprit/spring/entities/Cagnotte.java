@@ -4,6 +4,7 @@ package tn.esprit.spring.entities;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,7 +34,8 @@ public class Cagnotte {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idCagnotte;
+	@Column (name = "id_cagnotte" )
+	private Long id;
 	private float amount;
 	
 

@@ -50,7 +50,7 @@ public class Publication {
 	private String state ; 
 	
 	@ManyToOne
-	@JsonIgnore
+	//@JsonIgnore
 	private User user ; 
 	
 	@OneToMany(cascade = CascadeType.ALL , mappedBy =  "publication")
@@ -60,6 +60,12 @@ public class Publication {
 	@OneToMany (cascade = CascadeType.ALL , mappedBy =  "publication")
 	@JsonIgnore
 	private List<CommentD> commentDs;
+
+	@Override
+	public String toString() {
+		return "Publication [idPublication=" + idPublication + ", post=" + post + ", date=" + date + ", time=" + time
+				+ ", state=" + state + ", user=" + user + ", reactions=" + reactions + ", commentDs=" + commentDs + "]";
+	}
 	
 
 	

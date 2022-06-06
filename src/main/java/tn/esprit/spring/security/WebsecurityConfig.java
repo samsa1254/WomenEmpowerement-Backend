@@ -141,12 +141,17 @@ public class WebsecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
         .authorizeRequests()
         	.antMatchers("/authenticate").permitAll()
-        	
+        	.antMatchers("/Publications/**").permitAll()
+        	.antMatchers("/user/**").permitAll()
+
             .antMatchers("/user/register").permitAll()
             .antMatchers("/user/confirm-account").permitAll()
             .antMatchers("/user/retrieve-all-User").permitAll()
             .antMatchers("/user/retrieve-User/**").permitAll()
+            .antMatchers("/user/retrieve-all-Username").permitAll()
+            .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
+            
             .and()
         .authorizeRequests()
             .antMatchers("/user/add-User").hasAnyAuthority("Admin")
@@ -174,7 +179,7 @@ public class WebsecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable();
 		
 		
-		
+
 		
 		
 		

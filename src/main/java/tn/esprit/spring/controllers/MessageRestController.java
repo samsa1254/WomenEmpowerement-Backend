@@ -1,6 +1,7 @@
 package tn.esprit.spring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ import tn.esprit.spring.entities.Message;
 import tn.esprit.spring.service.MessageService;
 
 @Api(tags = "Message Management")
-
+@CrossOrigin
 @RestController
 @RequestMapping("/Message")
 public class MessageRestController {

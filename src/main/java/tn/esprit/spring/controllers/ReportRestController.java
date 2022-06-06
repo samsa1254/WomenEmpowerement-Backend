@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +33,7 @@ import tn.esprit.spring.service.SmsService;
 @Api(tags = "Report Management")
 @RestController
 @RequestMapping("/Report")
+@CrossOrigin
 public class ReportRestController {
 
 	@Autowired
@@ -112,29 +115,31 @@ public class ReportRestController {
 		repSer.treataReportbyMakingappointment(idreport,iduser2,iduser3,appointment);
 	}
 	
-	@PostMapping("/treatreport-byblockinguser/{idreport}/{iduser}")
+	@PutMapping("/treatreport-byblockinguser/{idU}")
 	@ResponseBody
-	public void treatreportbyblockinguser( @PathVariable("idreport") Long idreport,@PathVariable("iduser") int iduser)
+	public Report treatreportbyblockinguser( @RequestBody Report rep,@PathVariable("idU") int iduser)
 	{   
-		repSer.treataReportbyblockinguser(idreport, iduser);
+		repSer.treataReportbyblockinguser(rep, iduser);
+		repSer.updatereport(rep);
+		return rep ;
 	}
 	
-	@PostMapping("/treatreport-byunblockinguser/{idreport}/{iduser}")
+	@PutMapping("/treatreport-byunblockinguser/{idU}")
 	@ResponseBody
-	public void treatreportbyunblockinguser( @PathVariable("idreport") Long idreport,@PathVariable("iduser") int iduser)
+	public void treatreportbyunblockinguser( @RequestBody Report rep,@PathVariable("idU") int iduser)
 	{   
-		repSer.treataReportbyunblockinguser(idreport, iduser);
+		repSer.treataReportbyunblockinguser(rep, iduser);
 	}
 	
-	@GetMapping("/retrieve-useravailibility")
+	@GetMapping("/retrieve-userReports/{id}")
 	@ApiOperation(value = "recuperer les disponibilite d'un utilisateur   ")
 	@ResponseBody
-	public List<Report> getuseravailibility ()
-	{   SecurityContext context = SecurityContextHolder.getContext();
-        Authentication auth = context.getAuthentication();
-        User u = urep.findByLogin(auth.getName());
-        int UserId = u.getIduser() ; 
-		return  repSer.getuserreports(UserId);   
+	public List<Report> getuserreports (@PathVariable("id") int id)
+	{   //SecurityContext context = SecurityContextHolder.getContext();
+      //  Authentication auth = context.getAuthentication();
+      //  User u = urep.findByLogin(auth.getName());
+      //  int UserId = u.getIduser() ; 
+		return  repSer.getuserreports(id);   
 	}
 
 }

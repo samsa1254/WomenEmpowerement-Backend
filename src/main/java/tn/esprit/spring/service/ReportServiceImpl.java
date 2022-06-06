@@ -108,21 +108,17 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public void treataReportbyblockinguser(Long id, int iduser) {
+	public void treataReportbyblockinguser(Report r, int iduser) {
       User u=uRep.findById(iduser).get();
-      Report r=reportRep.findById(id).get();
       uSer.blockuseraccount(u);
-      r.setStatus("treated");
       reportRep.save(r);
       }
 
 	@Override
-	public void treataReportbyunblockinguser(Long id, int iduser) {
+	public void treataReportbyunblockinguser(Report r, int iduser) {
 		User u=uRep.findById(iduser).get();
-	      Report r=reportRep.findById(id).get();
-	      uSer.unblockuseraccount(u);;
-	      r.setStatus("treated");
-     	  reportRep.save(r);
+	      uSer.unblockuseraccount(u);
+	      reportRep.save(r);
 	}
 
 	@Override

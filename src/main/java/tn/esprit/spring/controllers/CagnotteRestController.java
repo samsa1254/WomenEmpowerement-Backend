@@ -11,6 +11,7 @@ import com.stripe.model.PaymentIntent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,8 +31,8 @@ import tn.esprit.spring.entities.Cagnotte;
 import tn.esprit.spring.service.CagnotteService;
 import tn.esprit.spring.service.StripeService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @Api(tags = "Cagnotte Management")
-
 @RestController
 @RequestMapping("/Cagnotte")
 
@@ -41,7 +44,9 @@ public class CagnotteRestController {
 	@Autowired
 	private StripeService stripeService;
 
-	@PutMapping("/addCagnotte")
+	
+	
+	@PostMapping("/addCagnotte")
     public ResponseEntity<Cagnotte> addCagnotte(@RequestBody Cagnotte cagnotte) {
 		cagnotteService.addCagnotte(cagnotte);
 		
@@ -70,15 +75,15 @@ public class CagnotteRestController {
 
 	    /*------------------------------Payment API--------------------------*/
 
-	//http://localhost:8089/SpringMVC/Cagnotte/customer/
-	@PostMapping("/customer/{idUser}")
+	//http://localhost:8089/SpringMVC/Cagnotte/CreatecustomerStripe/
+	@PostMapping("/CreatecustomerStripe/{iduser}")
 	@ResponseBody
-	public String createCustomer(@PathVariable("idUser") int idUser) {
-		return stripeService.createStripeCustomer(idUser);
+	public String createCustomer(@PathVariable("iduser") int iduser) {
+		return stripeService.createStripeCustomer(iduser);
 	}
 
 	// http://localhost:8089/SpringMVC/Cagnotte/customer/customer_id_from_stripeApi_acount/4242424242424242/11/2026/123
-	@PostMapping("/customer/{customerId}/{carta}/{expMonth}/{expYear}/{cvc}")
+	@PostMapping("/customerCard/{customerId}/{carta}/{expMonth}/{expYear}/{cvc}")
 	@ResponseBody
 	public String createCustumorStripe(@PathVariable("customerId") String customerId, @PathVariable("carta") String carta,
 								 @PathVariable("expMonth") String expMonth, @PathVariable("expYear") String expYear,

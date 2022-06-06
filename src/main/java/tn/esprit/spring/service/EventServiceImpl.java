@@ -2,36 +2,21 @@ package tn.esprit.spring.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-
-import tn.esprit.spring.entities.Cagnotte;
-import tn.esprit.spring.entities.Candidacy;
 import tn.esprit.spring.entities.Event;
-import tn.esprit.spring.entities.Offer;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.mail.EmailControllers;
 import tn.esprit.spring.repository.CagnotteRepository;
 import tn.esprit.spring.repository.EventRepository;
-import tn.esprit.spring.repository.UserRepository;
 import utils.*;
-
-import org.springframework.data.domain.*;
-
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.EntityNotFoundException;
-import java.io.IOException;
 import java.util.Objects;
 
 
@@ -45,36 +30,30 @@ public class EventServiceImpl  implements EventService{
 	@Autowired
 	CagnotteService cs;
 	@Autowired
-	private UserRepository UR;
-	@Autowired
 	EmailControllers EC;
 	
 	
 	@Override
-	 public void addEvent(Event event) {
-		 		 
+	 public void addEvent(Event event) {		 		 
 		 event = eventRepository.save(event);
-		 
-		 
 		 }
 	 
-/*	
 	@Override
-	 public void addEvent(Event event) {
-		 event = eventRepository.save(event);
-		 }
-	*/
+	public Event updateEvent( Event event) {
+		eventRepository.save(event);
+		return null;
+	}
+	
 	  @Override
 	  public Event getEventById(Long id) {
-	        return eventRepository.findById(id).get();
+			Event e = eventRepository.findById(id).get();
+	        return e;
 	    }
 
 	   @Override
 	   public void deleteEvent(Long id){
 		   eventRepository.deleteById(id);
 	    }
-	   
-
 	   
 	   @Override
 	   public MessageResponse addParticipant(Long id , List<User> participants) {
@@ -97,13 +76,6 @@ public class EventServiceImpl  implements EventService{
 		    response.setError(false);
 		    return response;
 	   }
-	   
-	   
-	   
-	 		
-	   
-	   
-
 
 	    /**
 	     * delete element

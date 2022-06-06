@@ -24,6 +24,7 @@ import tn.esprit.spring.service.MessagerecorderService;
 @RestController
 @CrossOrigin
 @RequestMapping("/chat")
+
 public class MessageController {
 
 	@Autowired

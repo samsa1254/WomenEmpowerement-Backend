@@ -2,6 +2,7 @@ package tn.esprit.spring.controllers;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.standard.expression.Each;
 
 import tn.esprit.spring.entities.ConfirmationToken;
 import tn.esprit.spring.entities.ExpertSpec;
@@ -36,7 +39,7 @@ import tn.esprit.spring.service.IUserService;
 
 
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -81,6 +84,7 @@ public class UserController {
 	return listUser;
 	}
 
+
 	@GetMapping("/retrieve-User/{userid}")
 	@ResponseBody
 	public User retrieveUser(@PathVariable("userid") int UserId) {
@@ -108,6 +112,20 @@ public class UserController {
 	     mailMessage.setText("WELCOME ! \n YOU ARE NOW A NEW MEMBER IN WOMEN EMPOWERMENET \n ");
 
 	     emailSenderService.sendEmail(mailMessage);}
+		else {
+			 ConfirmationToken confirmationToken = new ConfirmationToken(User);
+
+		     confirmationTokenRepository.save(confirmationToken);
+
+		     SimpleMailMessage mailMessage = new SimpleMailMessage();
+		     mailMessage.setTo(User.getEmail());
+		     mailMessage.setSubject("Complete Registration!");
+		     mailMessage.setFrom("womenempowermentesprit@gmail.com");
+		     mailMessage.setText("To confirm your account, please click here : "
+		     +"http://localhost:8089/SpringMVC/user/confirm-account?token="+confirmationToken.getConfirmationToken());
+
+		     emailSenderService.sendEmail(mailMessage);
+		}
 		
 	return User;}
 	}
@@ -242,8 +260,7 @@ public class UserController {
 	
 	User user = UserService.findUserByUserName(login);
     user.setPassword(generatedString) ; 
-
-
+    this.UserService.updateUser(user);
      SimpleMailMessage mailMessage = new SimpleMailMessage();
      mailMessage.setTo(user.getEmail());
      mailMessage.setSubject("PASSWORD RESET !");

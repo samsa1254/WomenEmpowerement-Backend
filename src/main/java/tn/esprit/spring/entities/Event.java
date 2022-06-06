@@ -3,6 +3,7 @@ package tn.esprit.spring.entities;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -44,23 +45,22 @@ public class Event {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idEvent;
-	
+	@Column (name = "id_event")
+	private Long Id;
 	@NotNull //(message = "date shouldn't be empty")
 	@DateTimeFormat(pattern = "dd/mm/yyyy")
 	private Date dateDebut;
 	@NotNull //(message = "date shouldn't be empty")
 	@DateTimeFormat(pattern = "dd/mm/yyyy")
 	private Date dateFin;
+	
 	@Enumerated(EnumType.STRING)
 	private Type type;
 	@NotNull //(message = "description shouldn't be empty")
 	private String description;
 	@NotNull //(message = "title shouldn't be empty")
-	
-private String title;
+    private String title;
 
-    
 	@OneToOne
 	@JsonIgnore
 	@Nullable
@@ -73,8 +73,4 @@ private String title;
 	@OneToOne
 	Cagnotte cagnotte;
 	
-	
-	
-	
-
 }

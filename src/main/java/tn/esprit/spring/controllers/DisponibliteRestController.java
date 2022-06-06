@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,7 @@ import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repository.UserRepository;
 import tn.esprit.spring.service.AppointmentService;
 import tn.esprit.spring.service.DisponibiliteService;
-
+@CrossOrigin
 @Api(tags = "Availibility Management")
 @RestController
 @RequestMapping("/Availibility")

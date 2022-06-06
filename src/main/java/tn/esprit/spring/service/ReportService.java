@@ -14,8 +14,8 @@ public interface ReportService{
 	public Report retrievebyId ( Long id );
 	public List<Report> retrieveallreps ();
 	public Appointment treataReportbyMakingappointment(Long id, int iduser2,int user3,Appointment a);
-	public void treataReportbyblockinguser(Long id,int iduser);
-	public void treataReportbyunblockinguser(Long id,int iduser);
+	public void treataReportbyblockinguser(Report r ,int iduser);
+	public void treataReportbyunblockinguser(Report r,int iduser);
 	public List<Report> getuserreports(int iduser);
 	
 

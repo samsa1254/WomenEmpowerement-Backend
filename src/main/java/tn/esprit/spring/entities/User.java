@@ -59,14 +59,14 @@ public class User implements Serializable{
 	@Column(nullable = false)
 	private String login; 
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String password ; 
 		
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Role role; 
 	
-    @Column(columnDefinition = "boolean default false",nullable = false)
+    @Column(columnDefinition = "boolean default false",nullable = true)
     private Boolean isEnabled;
 
 	//For Women Only 

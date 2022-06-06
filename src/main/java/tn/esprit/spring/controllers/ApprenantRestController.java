@@ -1,6 +1,7 @@
 package tn.esprit.spring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import tn.esprit.spring.service.ApprenantService;
 
 @RestController
 @RequestMapping("/Apprenant")
+@CrossOrigin
 
 public class ApprenantRestController {
 	@Autowired

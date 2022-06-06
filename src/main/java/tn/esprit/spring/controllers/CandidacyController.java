@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,8 @@ import tn.esprit.spring.service.CandidacyService;
 @Api("Candidacy")
 @RestController
 @RequestMapping("/Candidacy")
+@CrossOrigin
+
 public class CandidacyController {
 	@Autowired
 	private CandidacyService CS;
@@ -52,14 +55,14 @@ public class CandidacyController {
 	}
 	
 	
-	@PostMapping("/Affect/{ido}")
+	@PostMapping("/Affect/{ido}/{idu}")
 	@ResponseBody
-	public void Affect( @RequestBody Candidacy Candidacy ,@PathVariable("ido") Long ido)
+	public void Affect( @RequestBody Candidacy Candidacy ,@PathVariable("ido") Long ido,@PathVariable("idu") int idu)
 	{
 		SecurityContext context = SecurityContextHolder.getContext();
         Authentication auth = context.getAuthentication();
         User u = ur.findByLogin(auth.getName());
-        int idu = u.getIduser() ; 
+        //int idu = u.getIduser() ; 
 		CS.Affect(Candidacy, ido, idu);
 	}
 
